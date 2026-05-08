@@ -3,7 +3,9 @@ CC = gcc
 CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c11
 
 SRC = src/string/strlen.c \
-      src/string/memcpy.c
+      src/string/memcpy.c \
+      src/string/strcpy.c \
+      src/string/strcpy_v2.c
 
 OBJ = $(SRC:.c=.o)
 

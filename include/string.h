@@ -11,5 +11,7 @@ char *ft_strcpy(char *dest, const char *src);
 
 char *ft_strcpy_v2(char *dest, const char *src);
 
+char *ft_strcat(char *dest, const char *src);
+
 
 #endif

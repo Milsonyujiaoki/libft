@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c11 -Iinclude
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c11 -Lbuild -lmini -Iinclude
 
 AR = ar
 ARFLAGS = rcs
@@ -15,16 +15,19 @@ LIB = $(BUILD_DIR)/libmini.a
 # Source files
 # =========================
 
+
 STRING_SRC = $(wildcard src/string/*.c)
 MEMORY_SRC = $(wildcard src/memory/*.c)
 IO_SRC = $(wildcard src/io/*.c)
 CONV_SRC = $(wildcard src/conversion/*.c)
+CTYPE_SRC = $(wildcard src/ctype/*.c)
 
 SRC = \
 	$(STRING_SRC) \
 	$(MEMORY_SRC) \
 	$(IO_SRC) \
-	$(CONV_SRC)
+	$(CONV_SRC) \
+	$(CTYPE_SRC)
 
 # =========================
 # Object files
@@ -36,16 +39,19 @@ OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 # Test files
 # =========================
 
+
 STRING_TESTS = $(wildcard tests/string/*.c)
 MEMORY_TESTS = $(wildcard tests/memory/*.c)
 IO_TESTS = $(wildcard tests/io/*.c)
 CONV_TESTS = $(wildcard tests/conversion/*.c)
+CTYPE_TESTS = $(wildcard tests/ctype/*.c)
 
 TESTS = \
 	$(STRING_TESTS) \
 	$(MEMORY_TESTS) \
 	$(IO_TESTS) \
-	$(CONV_TESTS)
+	$(CONV_TESTS) \
+	$(CTYPE_TESTS)
 
 TEST_BINS = $(patsubst tests/%.c,$(TEST_DIR)/%,$(TESTS))
 

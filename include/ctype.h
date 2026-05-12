@@ -7,8 +7,9 @@ int ft_isalpha(int ch);
 
 int ft_isdigit(int dg);
 
-int ft_isalnum(int ch );
+int ft_isalnum(int ch);
 
+int ft_isascii(int ch);
 
 
 

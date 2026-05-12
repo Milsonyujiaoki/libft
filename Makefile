@@ -1,6 +1,6 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c11 -Lbuild -lmini -Iinclude
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -O0 -O2 -O3 -fsanitize=address  -std=c11 -Lbuild -lmini -Iinclude
 
 AR = ar
 ARFLAGS = rcs

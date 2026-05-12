@@ -4,6 +4,8 @@
 
 int main(void) {
     const char *original = "Hello, World!";
+    //Ao contrário de ft_strcpy e ft_memcpy, tu não precisas de ter um buffer de destino pronto; ela cria um novo para ti
+    //Como ela usa malloc, tu é responsável por dar free() nessa memória mais tarde para evitar memory leaks.
     char *duplicate = ft_strdup(original);
 
     if (duplicate == NULL) {

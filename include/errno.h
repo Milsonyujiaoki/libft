@@ -1,5 +1,5 @@
-#ifndef MINI_ERRNO_H
-#define MINI_ERRNO_H
+#ifndef ERRNO_H
+#define ERRNO_H
 
 /* Global error number variable */
 extern int errno;

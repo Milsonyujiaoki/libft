@@ -35,7 +35,7 @@ TEST_BINS = $(patsubst tests/%.c,$(TEST_DIR)/%,$(TESTS))
 # Main targets
 # =========================
 
-# Adicionado $(TEST_BINS) ao 'all' conforme solicitado
+# Adicionado $(TEST_BINS) ao 'all' 
 all: $(LIB) $(TEST_BINS)
 
 test: all

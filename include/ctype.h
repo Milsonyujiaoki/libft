@@ -1,5 +1,5 @@
-#ifndef MINI_CTYPE_H
-#define MINI_CTYPE_H
+#ifndef CTYPE_H
+#define CTYPE_H
 
 /* Character classification functions */
 int ft_isdigit(int c);

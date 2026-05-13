@@ -1,5 +1,5 @@
-#ifndef MINI_STRING_H
-#define MINI_STRING_H
+#ifndef STRING_H
+#define STRING_H
 
 #include <stddef.h>
 
@@ -27,11 +27,15 @@ char *ft_strcpy_v2(char *dest, const char *src);
 
 char *ft_strncpy(char *dest, const char *src, size_t count);
 
+size_t ft_strlcpy(char *dst, const char *src, size_t size);
+
 char *ft_strdup(const char *src);
 
 char *ft_strndup(const char *src, size_t count);
 
 char *ft_strcat(char *dest, const char *src);
+
+size_t ft_strlcat(char *dst, const char *src, size_t size);
 
 char *ft_strncat(char *dest, const char *src, size_t count);
 
@@ -40,17 +44,17 @@ char *ft_strncat(char *dest, const char *src, size_t count);
 
 void *ft_memset( void *dest, int ch, size_t count );
 
-void *ft_memcpy(void *dest, const void *src, size_t n);
+void *ft_memcpy(void *dest, const void *src, size_t count);
 
-void *ft_memccpy(void *dest, const void *src, int ch, size_t n);
+void *ft_memccpy(void *restrict dest, const void *restrict src,int c, size_t count);
 
-void *ft_memmove(void *dest, const void *src, size_t n);
+void *ft_memmove(void *dest, const void *src, size_t count);
 
 int ft_memcmp(const void *lhs, const void *rhs, size_t count);
 
-void *ft_memchr(const void *ptr, int value, size_t num);
+void *ft_memchr(const void *ptr, int value, size_t count);
 
-void *ft_bzero(void *ptr, size_t num);
+void *ft_bzero(void *ptr, size_t count);
 
 
 #endif

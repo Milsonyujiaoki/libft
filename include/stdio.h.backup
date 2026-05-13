@@ -1,5 +1,5 @@
-#ifndef MINI_STDIO_H
-#define MINI_STDIO_H
+#ifndef STDIO_H
+#define STDIO_H
 
 /* Include system stdio.h for standard I/O functions in tests */
 #ifdef __GNUC__

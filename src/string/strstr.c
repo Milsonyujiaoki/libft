@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include <string.h>
 
 
 char *ft_strstr(const char *str, const char* substr) {

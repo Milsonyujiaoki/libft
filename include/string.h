@@ -3,7 +3,23 @@
 
 #include <stddef.h>
 
+/* String examination functions */
+
 size_t ft_strlen(const char *str);
+
+int  ft_strcmp(const char *lhs, const char *rhs);
+
+int  ft_strncmp(const char *lhs, const char *rhs, size_t count);
+
+char *ft_strchr(const char* str, int ch);
+
+char *ft_strrchr(const char* str, int ch);
+
+char *ft_strstr(const char *str, const char* substr);
+
+char *ft_strtok( char* restrict str, const char* restrict delim );
+
+//string manipulation functions
 
 char *ft_strcpy(char *dest, const char *src);
 
@@ -19,17 +35,22 @@ char *ft_strcat(char *dest, const char *src);
 
 char *ft_strncat(char *dest, const char *src, size_t count);
 
-int  ft_strcmp(const char *lhs, const char *rhs);
 
-int  ft_strncmp(const char *lhs, const char *rhs, size_t count);
+// Memory functions
 
-char *ft_strchr(const char* str, int ch);
+void *ft_memset( void *dest, int ch, size_t count );
 
-char *ft_strrchr(const char* str, int ch);
+void *ft_memcpy(void *dest, const void *src, size_t n);
 
-char *ft_strstr(const char *str, const char* substr);
+void *ft_memccpy(void *dest, const void *src, int ch, size_t n);
 
-char *ft_strtok( char* restrict str, const char* restrict delim );
+void *ft_memmove(void *dest, const void *src, size_t n);
+
+int ft_memcmp(const void *lhs, const void *rhs, size_t count);
+
+void *ft_memchr(const void *ptr, int value, size_t num);
+
+void *ft_bzero(void *ptr, size_t num);
 
 
 #endif

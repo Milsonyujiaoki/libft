@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include <string.h>
 
 char *ft_strtok( char* restrict str, const char* restrict delim ) {
     static char *last_pos = NULL;

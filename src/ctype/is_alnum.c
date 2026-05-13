@@ -1,4 +1,4 @@
-#include "../../include/ctype.h"
+#include <ctype.h>
 
 int ft_isalnum(int ch){
 	return (ft_isupper(ch)||

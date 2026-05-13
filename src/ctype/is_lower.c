@@ -1,4 +1,4 @@
-#include "../../include/ctype.h"
+#include <ctype.h>
 
 int ft_islower(int c)
 {

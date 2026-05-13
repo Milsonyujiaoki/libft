@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include <string.h>
 
 int ft_strcmp(const char *lhs, const char *rhs)
 {

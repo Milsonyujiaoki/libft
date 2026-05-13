@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include <string.h>
 
 char *ft_strcat(char *dest, const char *src) {
     char *ptr = dest;

@@ -19,8 +19,8 @@ LIB = $(BUILD_DIR)/libft.a
 # Source files
 # =========================
 
-# Usando um padrão mais limpo para encontrar os subdiretórios
-SRC = $(wildcard src/**/*.c)
+# Estrutura plana: src/{ctype,string,memory,stdlib,stdio,unistd}/*.c
+SRC = $(wildcard src/*/*.c)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # =========================

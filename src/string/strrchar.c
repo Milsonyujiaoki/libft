@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include <string.h>
 
 char *ft_strrchr(const char* str, int ch){
     const char *last_occurrence = NULL;

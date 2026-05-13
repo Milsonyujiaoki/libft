@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include <string.h>
 
 size_t ft_strlen(const char *str) {
 	    const char *start = str;

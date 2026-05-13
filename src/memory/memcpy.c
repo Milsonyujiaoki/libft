@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include "../../include/memory.h"
 
 void *ft_memcpy(void *dest, const void *src, size_t n) {
     unsigned char *d = dest;
@@ -7,6 +7,6 @@ void *ft_memcpy(void *dest, const void *src, size_t n) {
     while (n--) {
         *d++ = *s++;
     }
-
+    
     return dest;
 }

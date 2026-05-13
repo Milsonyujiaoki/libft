@@ -1,18 +1,39 @@
 #include <stdio.h>
 #include "../../include/ctype.h"
 
-int main(void){
-	int teste[] = {'A', '!', 128, 255, -1, 0,127,'z','?'};
-	int tamanho = sizeof(teste) / sizeof(teste[0]);
+int main(void) {
+    // 1. Casos Válidos (Devem passar)
+    char validos[] = "059aFf";
+    
+    // 2. Casos Inválidos Próximos (Devem falhar - Erros comuns de intervalo)
+    char invalidos[] = "127-1\xFF"; // 127 é limite superior, -1 e 255 são comuns em erros de conversão
+    
+    // 3. Casos Especiais (Invisíveis e limites ASCII)
+    int especiais[] = {0, 32, 127, -1, 255};
 
-	for(int i = 0; i < tamanho; i++){
-    	if(ft_isascii(teste[i])){
-        	// %3d alinha os números, %c mostra o char
-        	printf("Decimal %3d: [ %c ] É ascii.\n", teste[i], (teste[i] < 32 ? ' ' : teste[i]));
-    	} else {
-        	printf("Decimal %3d: [ %c ] NÃO é ascii.\n", teste[i], ' ');
+    printf("=== TESTANDO CASOS VÁLIDOS (Esperado: > 0) ===\n");
+    for (size_t i = 0; validos[i] != '\0'; i++) {
+        int res = ft_isascii(validos[i]);
+        // Verificamos apenas se res != 0 (padrão C)
+        printf("Char '%c' (ASCII %3d) -> Retorno: %d [%s]\n", 
+               validos[i], validos[i], res, (res != 0) ? "OK" : "FAIL");
     }
-}
-		
-	return 0;
+
+    printf("\n=== TESTANDO CASOS INVÁLIDOS (Esperado: 0) ===\n");
+    for (size_t i = 0; invalidos[i] != '\0'; i++) {
+        int res = ft_isascii(invalidos[i]);
+        printf("Char '%c' (ASCII %3d) -> Retorno: %d [%s]\n", 
+               invalidos[i], invalidos[i], res, (res == 0) ? "OK" : "FAIL");
+    }
+
+    printf("\n=== TESTANDO LIMITES E ESPECIAIS (Esperado: 0) ===\n");
+    for (size_t i = 0; i < sizeof(especiais) / sizeof(especiais[0]); i++) {
+        int res = ft_isascii(especiais[i]);
+        // Se for imprimível mostra o char, senão mostra '?'
+        char visual = (especiais[i] >= 32 && especiais[i] < 127) ? especiais[i] : '?';
+        printf("Int  %3d  (Visual '%c') -> Retorno: %d [%s]\n", 
+               especiais[i], visual, res, (res == 0) ? "OK" : "FAIL");
+    }
+
+    return (0);
 }

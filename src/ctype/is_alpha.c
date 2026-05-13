@@ -2,5 +2,5 @@
 
 int ft_isalpha(int ch){
 
-	return ((ch >='A' && 'Z' >= ch)||(ch >='a' && 'z' >= ch));
+	return (ft_isupper(ch) || ft_islower(ch));
 }

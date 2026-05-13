@@ -1,6 +1,9 @@
 CC = gcc
 
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -std=c11 -Lbuild -lmini -Iinclude
+# Ajustado: Removidos níveis de otimização duplicados. Mantive -O2.
+# Importante: O nome da lib deve bater com o -l. Se a lib é libft.a, usamos -lft.
+CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -fsanitize=address -std=c11 -Iinclude
+LDFLAGS = -L$(BUILD_DIR) -lft
 
 AR = ar
 ARFLAGS = rcs
@@ -9,62 +12,39 @@ BUILD_DIR = build
 OBJ_DIR = $(BUILD_DIR)/obj
 TEST_DIR = $(BUILD_DIR)/tests
 
-LIB = $(BUILD_DIR)/libmini.a
+# Nome da biblioteca consistente
+LIB = $(BUILD_DIR)/libft.a
 
 # =========================
 # Source files
 # =========================
 
-
-STRING_SRC = $(wildcard src/string/*.c)
-MEMORY_SRC = $(wildcard src/memory/*.c)
-IO_SRC = $(wildcard src/io/*.c)
-CONV_SRC = $(wildcard src/conversion/*.c)
-CTYPE_SRC = $(wildcard src/ctype/*.c)
-
-SRC = \
-	$(STRING_SRC) \
-	$(MEMORY_SRC) \
-	$(IO_SRC) \
-	$(CONV_SRC) \
-	$(CTYPE_SRC)
-
-# =========================
-# Object files
-# =========================
-
+# Usando um padrão mais limpo para encontrar os subdiretórios
+SRC = $(wildcard src/**/*.c)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # =========================
 # Test files
 # =========================
 
-
-STRING_TESTS = $(wildcard tests/string/*.c)
-MEMORY_TESTS = $(wildcard tests/memory/*.c)
-IO_TESTS = $(wildcard tests/io/*.c)
-CONV_TESTS = $(wildcard tests/conversion/*.c)
-CTYPE_TESTS = $(wildcard tests/ctype/*.c)
-
-TESTS = \
-	$(STRING_TESTS) \
-	$(MEMORY_TESTS) \
-	$(IO_TESTS) \
-	$(CONV_TESTS) \
-	$(CTYPE_TESTS)
-
+TESTS = $(wildcard tests/**/*.c)
+# Isso transforma tests/string/test_strlen.c em build/tests/string/test_strlen
 TEST_BINS = $(patsubst tests/%.c,$(TEST_DIR)/%,$(TESTS))
 
 # =========================
 # Main targets
 # =========================
 
-all: $(LIB)
+# Adicionado $(TEST_BINS) ao 'all' conforme solicitado
+all: $(LIB) $(TEST_BINS)
 
-test: $(LIB) $(TEST_BINS)
+test: all
+	@echo "Estrutura de testes encontrada: $(TEST_BINS)"
 	@for test_bin in $(TEST_BINS); do \
-		echo "Running $$test_bin"; \
-		./$$test_bin; \
+		if [ -f $$test_bin ]; then \
+			echo "Running $$test_bin"; \
+			./$$test_bin; \
+		fi \
 	done
 
 # =========================
@@ -87,9 +67,11 @@ $(OBJ_DIR)/%.o: src/%.c
 # Test compilation
 # =========================
 
+# Aqui está a correção do link: usamos $(LIB) como dependência 
+# e garantimos que o binário saia na pasta correta.
 $(TEST_DIR)/%: tests/%.c $(LIB)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $< -L$(BUILD_DIR) -lmini -o $@
+	$(CC) $(CFLAGS) $< $(LDFLAGS) -o $@
 
 # =========================
 # Cleanup
@@ -97,7 +79,6 @@ $(TEST_DIR)/%: tests/%.c $(LIB)
 
 clean:
 	rm -rf $(BUILD_DIR)
-	find . -name "*.o" -delete
 
 re: clean all
 

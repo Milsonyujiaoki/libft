@@ -57,4 +57,21 @@ void *ft_memchr(const void *ptr, int value, size_t count);
 void *ft_bzero(void *ptr, size_t count);
 
 
+// Additional functions
+
+char *ft_substr(const char *str, unsigned int start, size_t len);
+
+char *ft_strjoin(const char *s1, const char *s2);
+
+char *ft_strtrim(const char *str, const char *set);
+
+char **ft_split(const char *str, char delimiter);
+
+char *ft_strmapi(const char *str, char (*f)(unsigned int, char));
+
+void ft_striteri(char *str, void (*f)(unsigned int, char*));
+
+
+
+
 #endif

@@ -1,9 +1,13 @@
 #include <stdlib.h>
-#include <stddef.h>
+#include "memory/alloc.h"
 
-
-void *ft_malloc(size_t size) {
-    // TODO: implement - call syscall brk/sbrk or mmap
-    (void)size;
-    return NULL;
+/*
+** ft_malloc — wraps the system allocator.
+** Future: replace body with a custom slab / arena allocator.
+*/
+void    *ft_malloc(t_usize size)
+{
+    if (size == 0)
+        return (NULL);
+    return (malloc(size));
 }

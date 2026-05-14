@@ -1,4 +1,4 @@
-#include <ctype.h>
+#include "libft.h"
 
 int ft_ispunct(int ch)
 {

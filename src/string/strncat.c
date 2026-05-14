@@ -1,4 +1,4 @@
-#include <string.h>
+#include "libft.h"
 #include <stddef.h>
 
 char	*ft_strncat(char *dest, const char *src, size_t count)

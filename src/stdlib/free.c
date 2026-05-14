@@ -1,6 +1,10 @@
 #include <stdlib.h>
+#include "memory/alloc.h"
 
-void ft_free(void *ptr) {
-    // TODO: implement - manage heap
-    (void)ptr;
+/*
+** ft_free — wraps the system free.
+*/
+void    ft_free(void *ptr)
+{
+    free(ptr);
 }

@@ -7,6 +7,7 @@ size_t	ft_strlcat(char *dst, const char *src, size_t size);
 int	main(void)
 {
 	size_t	tamanho_necessario;
+	char	dest3_antes[20];
 
 	// =========================================================================
 	// TESTE 1: Cenário de Sucesso (Cabe tudo no buffer)
@@ -52,13 +53,16 @@ int	main(void)
 	char	src3[] = "Invisível";
 	char	dest3[20] = "Texto Base"; // comprimento inicial = 10
 
+	ft_strcpy(dest3_antes, dest3);
 	printf("Antes -> Dest: '%s' | Src: '%s'\n", dest3, src3);
 	// Passamos size = 5, que é menor que o comprimento de "Texto Base" (10)
 	tamanho_necessario = ft_strlcat(dest3, src3, 5);
 	printf("Depois -> Dest: '%s' (Não deve ter mudado)\n", dest3);
-	printf("Retorno da Função:  %zu (Esperado: 5 + 9 = 14)\n", tamanho_necessario);
+	printf("Retorno da Função:  %zu (Esperado: 5 + %zu = %zu)\n",
+		tamanho_necessario, ft_strlen(src3), 5 + ft_strlen(src3));
 
-	if (ft_strlcat(dest3, "Texto Base", 5) == 0 && tamanho_necessario == 14)
+	if (ft_strcmp(dest3, dest3_antes) == 0
+		&& tamanho_necessario == (5 + ft_strlen(src3)))
 		printf("Resultado:          [SUCESSO] Proteção ativa. Destino intacto.\n");
 	else
 		printf("Resultado:          [FALHA] O destino foi corrompido ou o retorno está incorreto.\n");

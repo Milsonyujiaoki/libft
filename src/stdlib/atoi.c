@@ -1,7 +1,7 @@
-#include <stdlib.h>
-#include "ctype.h"
+#include "libft.h"
 
-int ft_atoi(const char *str) {
+int ft_atoi(const char *str)
+{
     // 1. Declarar variáveis (índice, sinal, resultado)
     
     // 2. Loop para pular espaços: ' ', '\t', '\n', '\v', '\f', '\r'
@@ -21,10 +21,13 @@ int ft_atoi(const char *str) {
     }
 
     // Lidar com sinal opcional
-    if (*str == '-') {
+    if (*str == '-')
+    {
         sign = -1;
         str++;
-    } else if (*str == '+') {
+    }
+    else if (*str == '+')
+    {
         str++;
     }
 

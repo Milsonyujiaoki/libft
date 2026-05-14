@@ -1,4 +1,4 @@
-#include <string.h>
+#include "libft.h"
 
 char *ft_strncpy(char *dest, const char *src, size_t count){
 	size_t i;

@@ -1,6 +1,4 @@
-#include <stdlib.h>
-#include <stddef.h>
-#include <string.h>
+#include "libft.h"
 
 
 void	*ft_calloc(size_t count, size_t size)
@@ -11,7 +9,7 @@ void	*ft_calloc(size_t count, size_t size)
 	total_size = count * size;
 	if (size != 0 && (total_size / size) != count)
 		return (NULL);
-	ptr = malloc(total_size);
+	ptr = ft_malloc(total_size);
 	if (ptr == NULL)
 		return (NULL);
 	ft_bzero(ptr, total_size);

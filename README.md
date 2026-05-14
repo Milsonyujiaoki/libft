@@ -1,132 +1,119 @@
-# mini_libc
+*This project has been created as part of the 42 curriculum by Milsonyujiaoki.*
 
-Educational reimplementation of a C standard library.
+# libft
 
-## Goals
+## Description
 
-- Understand libc internals
-- Learn low-level systems programming
-- Explore memory management
-- Implement runtime primitives
-- Study ABI and ELF behavior
+mini_libc is an educational C library that reimplements common libc behavior and extends it with modular utilities for data structures, memory helpers, and algorithms.
 
-## Project Structure
+Project goals:
 
-```
-mini_libc/
-├── include/              # Public headers (POSIX-compliant)
-│   ├── ctype.h          # Character classification/manipulation (15 functions)
-│   ├── string.h         # String and memory operations (21 functions)
-│   ├── errno.h          # Error codes and errno variable
-│   ├── stdio.h.backup   # Standard I/O (backup - uses system header)
-│   ├── stdlib.h.backup  # General utilities (backup - uses system header)
-│   └── unistd.h.backup  # POSIX API (backup - uses system header)
-│
-├── src/                 # Implementation organized by header
-│   ├── ctype/          # Character functions (15 implemented)
-│   ├── string/         # String functions (14 implemented)
-│   ├── memory/         # Memory functions (7 total: 1 impl + 6 stubs)
-│   ├── stdlib/         # Standard library (8 stubs)
-│   ├── stdio/          # Standard I/O (5 stubs)
-│   └── unistd/         # POSIX functions (3 stubs)
-│
-├── tests/              # Unit tests
-│   ├── ctype/         # 13 tests for character functions
-│   ├── string/        # 13 tests for string functions
-│   └── memory/        # 1 test for memory functions
-│
-└── build/             # Compiled artifacts
-    ├── libft.a        # Static library
-    ├── obj/           # Object files
-    └── tests/         # Compiled test binaries
-```
+- understand low-level API design in C;
+- practice memory-safe manual allocation patterns;
+- build and expose a reusable static library;
+- exercise test-driven validation for core primitives.
 
-## Implemented Modules
+Detailed overview of the library:
 
-### ctype.h (15/15 functions implemented)
-**Character Classification:**
-- `ft_isdigit`, `ft_isxdigit`, `ft_islower`, `ft_isupper`
-- `ft_isascii`, `ft_isalpha`, `ft_isalnum`
-- `ft_isprint`, `ft_isspace`, `ft_isblank`
-- `ft_isgraph`, `ft_iscntrl`, `ft_ispunct`
+- `core`: fixed-width types, status codes, configuration macros, compiler helpers.
+- `ctype`: character classification and case conversion (`ft_is*`, `ft_to*`).
+- `string`: string operations and helpers (copy, compare, search, split, trim, tokenization).
+- `memory`: raw memory operations and allocators (`mem*`, arena, pool, buffer).
+- `stdlib-ft`: conversion utilities (`ft_atoi`, `ft_atol`, `ft_itoa`, etc.).
+- `io/stdio`: output/input helpers and formatted output wrappers.
+- `sys/unistd`: wrappers for basic POSIX calls (`read`, `write`, `close`).
+- `ds`: custom containers (`t_slist`, `t_dlist`, `t_vector`, `t_stack`, `t_queue`).
+- `42 bonus linked list`: canonical 42 list API with `t_list` node and `ft_lst*` functions.
+- `algo`: sorting, searching, hashing, and comparison helpers.
 
-**Character Manipulation:**
-- `ft_toupper`, `ft_tolower`
+Linked list requirement (42 bonus) implemented:
 
-### string.h (14/14 string + 1/7 memory functions implemented)
-**String Examination:**
-- `ft_strlen`, `ft_strcmp`, `ft_strncmp`
-- `ft_strchr`, `ft_strrchr`, `ft_strstr`, `ft_strtok`
+- `t_list` is declared in `include/libft.h` as:
+  - `void *content`
+  - `struct s_list *next`
+- Implemented functions:
+  - `ft_lstnew`
+  - `ft_lstadd_front`
+  - `ft_lstsize`
+  - `ft_lstlast`
+  - `ft_lstadd_back`
+  - `ft_lstdelone`
+  - `ft_lstclear`
+  - `ft_lstiter`
+  - `ft_lstmap`
 
-**String Manipulation:**
-- `ft_strcpy`, `ft_strncpy`, `ft_strcat`, `ft_strncat`
-- `ft_strdup`, `ft_strndup` (stubs - require malloc)
+Current project snapshot:
 
-**Memory Operations:**
-- `ft_memcpy` ✅ (implemented)
-- `ft_memset`, `ft_memccpy`, `ft_memmove`, `ft_memcmp`, `ft_memchr`, `ft_bzero` (stubs)
+- static library output: `build/libft.a`
+- source files: 82 (`src/*/*.c`)
+- test files: 51 (`tests/*/*.c`)
+- main public entrypoint: `include/libft.h`
 
-### stdlib.h, stdio.h, unistd.h (stubs created)
-Function skeletons created for future implementation:
-- **stdlib:** `ft_atoi`, `ft_atol`, `ft_malloc`, `ft_calloc`, `ft_free`, `ft_exit`, `ft_abort`, `ft_getenv`
-- **stdio:** `ft_printf`, `ft_sprintf`, `ft_puts`, `ft_putchar`, `ft_getchar`
-- **unistd:** `ft_write`, `ft_read`, `ft_close`
+## Instructions
 
-## Build Instructions
+Compilation and execution:
 
 ```bash
-# Build library and tests
+# Build library and all tests
 make all
 
-# Run all tests
+# Run full test suite
 make test
 
-# Clean build artifacts
+# Run data-structure tests only
+make test_ds
+
+# Debug build with sanitizers
+make debug
+
+# Clean artifacts
 make clean
 
 # Rebuild from scratch
 make re
 ```
 
-## Usage
+Using the library in your code:
 
 ```c
-#include <ctype.h>
-#include <string.h>
+#include "libft.h"
 
-int main(void) {
-    char str[] = "Hello, World!";
-    
-    // Character classification
-    if (ft_isalpha(str[0])) {
-        str[0] = ft_tolower(str[0]);
-    }
-    
-    // String operations
-    size_t len = ft_strlen(str);
-    char *dup = ft_strdup(str);  // Note: stub, returns NULL
-    
-    return 0;
+int main(void)
+{
+    const char *msg = "Hello, mini_libc";
+    ft_printf("%s (%zu)\n", msg, ft_strlen(msg));
+    return (0);
 }
 ```
 
-Link with: `gcc -Iinclude your_file.c -Lbuild -lft`
+Link command example:
 
-## Architecture
+```bash
+gcc -Iinclude your_file.c -Lbuild -lft
+```
 
-- **x86_64** primary target
-- Position-independent code
-- No external dependencies (except system headers for testing)
-- Prefix `ft_` to avoid symbol conflicts
+Notes:
 
-## Testing
+- target architecture: x86_64
+- naming convention: `ft_` prefix for symbol isolation
+- project includes compatibility wrappers for legacy DS include paths under `include/ds/linkedList/`
 
-27 unit tests covering implemented functions:
-- 13 ctype tests
-- 13 string tests  
-- 1 memory test
+## Resources
 
-Run tests: `make test`
+Classic references for libc and low-level C:
+
+- The Linux Programming Interface, Michael Kerrisk
+- Advanced Programming in the UNIX Environment, W. Richard Stevens
+- C11 standard drafts and committee papers (ISO/IEC 9899)
+- Linux man-pages project: `man 3 malloc`, `man 3 strlen`, `man 2 write`, etc.
+- GNU C Library manual (glibc)
+- cppreference C documentation: https://en.cppreference.com/w/c
+
+How AI was used in this project:
+
+- AI assisted in refactoring module headers and include-path organization.
+- AI assisted in drafting and restructuring this README according to 42 requirements.
+- AI was used as an implementation and review accelerator; all changes were compiled and tested locally afterward.
 
 ## License
 

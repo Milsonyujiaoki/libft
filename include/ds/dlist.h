@@ -16,7 +16,7 @@
 **   - Bidirectional traversal
 **
 ** Ownership:
-**   Same as t_list — does NOT own pointed-to data by default.
+**   Same as t_list: does NOT own pointed-to data by default.
 ** =========================================================
 */
 
@@ -35,55 +35,49 @@ typedef struct s_dlist
 }   t_dlist;
 
 /*
-** ──── Lifecycle ────────────────────────────────────────── */
+** ---- Lifecycle ------------------------------------------ */
 
 t_dlist     *ft_dlist_create(void);
 void         ft_dlist_destroy(t_dlist *list);
 void         ft_dlist_destroy_deep(t_dlist *list, t_free_fn free_fn);
 
 /*
-** ──── Insertion ────────────────────────────────────────── */
+** ---- Insertion ------------------------------------------ */
 
 t_ft_status  ft_dlist_push_front(t_dlist *list, void *data);
 t_ft_status  ft_dlist_push_back(t_dlist *list, void *data);
-
-/* Insert a new node immediately after the given node. */
 t_ft_status  ft_dlist_insert_after(t_dlist *list,
                 t_dlist_node *node, void *data);
-
-/* Insert a new node immediately before the given node. */
 t_ft_status  ft_dlist_insert_before(t_dlist *list,
                 t_dlist_node *node, void *data);
 
 /*
-** ──── Removal ──────────────────────────────────────────── */
+** ---- Removal -------------------------------------------- */
 
 void        *ft_dlist_pop_front(t_dlist *list);
 void        *ft_dlist_pop_back(t_dlist *list);
-
-/* Unlink and free the node; returns its data pointer. */
 void        *ft_dlist_remove_node(t_dlist *list, t_dlist_node *node);
 
 /*
-** ──── Access ───────────────────────────────────────────── */
+** ---- Access --------------------------------------------- */
 
 void        *ft_dlist_front(const t_dlist *list);
 void        *ft_dlist_back(const t_dlist *list);
 
 /*
-** ──── Query ────────────────────────────────────────────── */
+** ---- Query ---------------------------------------------- */
 
 t_usize      ft_dlist_size(const t_dlist *list);
 t_bool       ft_dlist_empty(const t_dlist *list);
 
 /*
-** ──── Traversal ────────────────────────────────────────── */
+** ---- Traversal ------------------------------------------ */
 
 void         ft_dlist_foreach(t_dlist *list, t_visit_fn fn, void *ctx);
 void         ft_dlist_foreach_reverse(t_dlist *list, t_visit_fn fn, void *ctx);
 
 /*
-** ──── Search ───────────────────────────────────────────── */
+** ---- Search --------------------------------------------- */
 
 t_dlist_node *ft_dlist_find(const t_dlist *list, t_pred_fn pred,
                 const void *ctx);

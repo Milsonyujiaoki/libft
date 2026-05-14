@@ -16,73 +16,69 @@
 **
 ** Ownership:
 **   The list stores void * pointers and does NOT own them by
-**   default.  Use ft_list_destroy_deep() with a destructor to
+**   default. Use ft_list_destroy_deep() with a destructor to
 **   free the pointed-to data.
 ** =========================================================
 */
 
-typedef struct s_list_node
+typedef struct s_slist_node
 {
-    void               *data;
-    struct s_list_node *next;
-}   t_list_node;
+    void                *data;
+    struct s_slist_node *next;
+}   t_slist_node;
 
-typedef struct s_list
+typedef struct s_slist
 {
-    t_list_node *head;
-    t_usize      size;
-}   t_list;
+    t_slist_node *head;
+    t_usize       size;
+}   t_slist;
 
 /*
-** ──── Lifecycle ────────────────────────────────────────── */
+** ---- Lifecycle ------------------------------------------ */
 
-t_list      *ft_list_create(void);
-void         ft_list_destroy(t_list *list);
-void         ft_list_destroy_deep(t_list *list, t_free_fn free_fn);
-
-/*
-** ──── Insertion ────────────────────────────────────────── */
-
-t_ft_status  ft_list_push_front(t_list *list, void *data);
-t_ft_status  ft_list_push_back(t_list *list, void *data);
-t_ft_status  ft_list_insert_at(t_list *list, t_usize index, void *data);
+t_slist      *ft_list_create(void);
+void          ft_list_destroy(t_slist *list);
+void          ft_list_destroy_deep(t_slist *list, t_free_fn free_fn);
 
 /*
-** ──── Removal ──────────────────────────────────────────── */
+** ---- Insertion ------------------------------------------ */
 
-/* Removes and returns the front element's data pointer. */
-void        *ft_list_pop_front(t_list *list);
-
-/* Removes and returns the element at index.  Caller owns the data. */
-void        *ft_list_remove_at(t_list *list, t_usize index);
+t_ft_status   ft_list_push_front(t_slist *list, void *data);
+t_ft_status   ft_list_push_back(t_slist *list, void *data);
+t_ft_status   ft_list_insert_at(t_slist *list, t_usize index, void *data);
 
 /*
-** ──── Access ───────────────────────────────────────────── */
+** ---- Removal -------------------------------------------- */
 
-void        *ft_list_front(const t_list *list);
-void        *ft_list_get(const t_list *list, t_usize index);
-
-/*
-** ──── Query ────────────────────────────────────────────── */
-
-t_usize      ft_list_size(const t_list *list);
-t_bool       ft_list_empty(const t_list *list);
+void         *ft_list_pop_front(t_slist *list);
+void         *ft_list_remove_at(t_slist *list, t_usize index);
 
 /*
-** ──── Traversal ────────────────────────────────────────── */
+** ---- Access --------------------------------------------- */
 
-void         ft_list_foreach(t_list *list, t_visit_fn fn, void *ctx);
+void         *ft_list_front(const t_slist *list);
+void         *ft_list_get(const t_slist *list, t_usize index);
 
 /*
-** ──── Search ───────────────────────────────────────────── */
+** ---- Query ---------------------------------------------- */
 
-/* Returns the first node whose data satisfies pred, or NULL. */
-t_list_node *ft_list_find(const t_list *list, t_pred_fn pred,
+t_usize       ft_list_size(const t_slist *list);
+t_bool        ft_list_empty(const t_slist *list);
+
+/*
+** ---- Traversal ------------------------------------------ */
+
+void          ft_list_foreach(t_slist *list, t_visit_fn fn, void *ctx);
+
+/*
+** ---- Search --------------------------------------------- */
+
+t_slist_node *ft_list_find(const t_slist *list, t_pred_fn pred,
                 const void *ctx);
 
 /*
-** ──── Mutation ─────────────────────────────────────────── */
+** ---- Mutation ------------------------------------------- */
 
-void         ft_list_reverse(t_list *list);
+void          ft_list_reverse(t_slist *list);
 
 #endif /* LIBFT_DS_LIST_H */

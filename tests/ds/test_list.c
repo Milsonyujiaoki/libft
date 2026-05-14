@@ -3,7 +3,7 @@
 
 /*
 ** =========================================================
-** Tests: t_list (singly linked list)
+** Tests: t_slist (custom singly linked list)
 ** =========================================================
 */
 
@@ -19,7 +19,7 @@ static int  s_fail = 0;
 /* ── Lifecycle ───────────────────────────────────────── */
 static void test_list_create(void)
 {
-    t_list  *l;
+    t_slist *l;
 
     printf("--- ft_list_create ---\n");
     l = ft_list_create();
@@ -32,7 +32,7 @@ static void test_list_create(void)
 /* ── push_front / push_back ──────────────────────────── */
 static void test_list_push(void)
 {
-    t_list  *l;
+    t_slist *l;
     int      a = 1, b = 2, c = 3;
 
     printf("--- ft_list_push_front / push_back ---\n");
@@ -53,7 +53,7 @@ static void test_list_push(void)
 /* ── pop_front / remove_at ───────────────────────────── */
 static void test_list_remove(void)
 {
-    t_list  *l;
+    t_slist *l;
     int      a = 10, b = 20, c = 30;
     int     *p;
 
@@ -78,7 +78,7 @@ static void test_list_remove(void)
 /* ── reverse ─────────────────────────────────────────── */
 static void test_list_reverse(void)
 {
-    t_list  *l;
+    t_slist *l;
     int      a = 1, b = 2, c = 3;
 
     printf("--- ft_list_reverse ---\n");
@@ -102,8 +102,8 @@ static t_bool pred_is_20(const void *elem, const void *ctx)
 
 static void test_list_find(void)
 {
-    t_list      *l;
-    t_list_node *node;
+    t_slist      *l;
+    t_slist_node *node;
     int          a = 10, b = 20, c = 30;
 
     printf("--- ft_list_find ---\n");
@@ -125,7 +125,7 @@ static void add_to_sum(void *elem, void *ctx)
 
 static void test_list_foreach(void)
 {
-    t_list  *l;
+    t_slist *l;
     int      a = 5, b = 10, c = 15;
     int      sum;
 
@@ -143,7 +143,7 @@ static void test_list_foreach(void)
 int main(void)
 {
     printf("========================================\n");
-    printf("  libft — t_list tests\n");
+    printf("  libft — t_slist tests\n");
     printf("========================================\n");
     test_list_create();
     test_list_push();

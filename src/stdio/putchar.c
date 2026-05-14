@@ -2,6 +2,6 @@
 
 int ft_putchar(int c) {
     // TODO: implement - write char to stdout
-    (void)c;
-    return c;
+    
+    return putchar(c);
 }

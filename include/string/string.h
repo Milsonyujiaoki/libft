@@ -49,7 +49,7 @@ char *ft_strjoin(const char *s1, const char *s2);
 
 char *ft_strtrim(const char *str, const char *set);
 
-char **ft_split(const char *str, char delimiter);
+char **ft_strsplit(const char *str, char delimiter);
 
 char *ft_strmapi(const char *str, char (*f)(unsigned int, char));
 

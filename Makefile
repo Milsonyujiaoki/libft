@@ -43,7 +43,7 @@ OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 # tests/*/*.c — covers both legacy (tests/string/*.c) and
 # new module tests (tests/ds/*.c, tests/algo/*.c, etc.)
 TESTS     = $(wildcard tests/*/*.c)
-TESTS     := $(filter-out tests/string/test_substr.c,$(TESTS))
+
 TEST_BINS = $(patsubst tests/%.c,$(TEST_DIR)/%,$(TESTS))
 
 # =========================

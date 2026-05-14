@@ -1,4 +1,4 @@
-#include "../../include/string.h"
+#include "libft.h"
 
 char *ft_strcpy_v2(char *dest, const char *src){
 	char *start = dest;

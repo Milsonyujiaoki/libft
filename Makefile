@@ -1,59 +1,93 @@
-CC = gcc
-
-# Ajustado: Removidos níveis de otimização duplicados. Mantive -O2.
-# Importante: O nome da lib deve bater com o -l. Se a lib é libft.a, usamos -lft.
-CFLAGS = -Wall -Wextra -Werror -Wpedantic -O2 -fsanitize=address -std=c11 -Iinclude
-LDFLAGS = -L$(BUILD_DIR) -lft
-
-AR = ar
+CC      = gcc
+AR      = ar
 ARFLAGS = rcs
 
-BUILD_DIR = build
-OBJ_DIR = $(BUILD_DIR)/obj
-TEST_DIR = $(BUILD_DIR)/tests
+# =========================
+# Compiler flags
+# =========================
 
-# Nome da biblioteca consistente
+CFLAGS   = -Wall -Wextra -Werror -Wpedantic -std=c11 -Iinclude
+CFLAGS  += -O2
+LDFLAGS  = -L$(BUILD_DIR) -lft
+TEST_INC = -Iinclude/core
+
+# Debug build: make debug
+debug: CFLAGS += -g -DLIBFT_DEBUG -fsanitize=address,undefined
+debug: LDFLAGS += -fsanitize=address,undefined
+debug: all
+
+# =========================
+# Directories
+# =========================
+
+BUILD_DIR = build
+OBJ_DIR   = $(BUILD_DIR)/obj
+TEST_DIR  = $(BUILD_DIR)/tests
+
+# =========================
+# Library
+# =========================
+
 LIB = $(BUILD_DIR)/libft.a
 
-# =========================
-# Source files
-# =========================
-
-# Usando um padrão mais limpo para encontrar os subdiretórios
-SRC = $(wildcard src/**/*.c)
+# All sources: one level deep inside src/ (src/*/*.c)
+# Automatically includes: ctype, memory, stdio, stdlib, string,
+#   unistd, ds, algo, internal — and any future module.
+SRC = $(wildcard src/*/*.c)
 OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
 
 # =========================
-# Test files
+# Tests
 # =========================
 
-TESTS = $(wildcard tests/**/*.c)
-# Isso transforma tests/string/test_strlen.c em build/tests/string/test_strlen
+# tests/*/*.c — covers both legacy (tests/string/*.c) and
+# new module tests (tests/ds/*.c, tests/algo/*.c, etc.)
+TESTS     = $(wildcard tests/*/*.c)
+TESTS     := $(filter-out tests/string/test_substr.c,$(TESTS))
 TEST_BINS = $(patsubst tests/%.c,$(TEST_DIR)/%,$(TESTS))
 
 # =========================
 # Main targets
 # =========================
 
-# Adicionado $(TEST_BINS) ao 'all' conforme solicitado
 all: $(LIB) $(TEST_BINS)
 
+# Run all tests
 test: all
-	@echo "Estrutura de testes encontrada: $(TEST_BINS)"
-	@for test_bin in $(TEST_BINS); do \
-		if [ -f $$test_bin ]; then \
-			echo "Running $$test_bin"; \
-			./$$test_bin; \
-		fi \
+	@echo ""
+	@echo "========================================"
+	@echo "  Running test suite"
+	@echo "========================================"
+	@PASS=0; FAIL=0; \
+	for bin in $(TEST_BINS); do \
+		if [ -f $$bin ]; then \
+			echo ""; \
+			echo "--- $$bin ---"; \
+			$$bin; \
+			if [ $$? -eq 0 ]; then PASS=$$((PASS+1)); \
+			else FAIL=$$((FAIL+1)); fi; \
+		fi; \
+	done; \
+	echo ""; \
+	echo "========================================"; \
+	echo "  Suites: $$PASS passed, $$FAIL failed"; \
+	echo "========================================"; \
+	[ $$FAIL -eq 0 ]
+
+# Run only DS tests
+test_ds: all
+	@for bin in $(TEST_DIR)/ds/*; do \
+		if [ -f $$bin ]; then echo "--- $$bin ---"; $$bin; fi; \
 	done
 
 # =========================
-# Library
+# Library compilation
 # =========================
 
 $(LIB): $(OBJ)
 	@mkdir -p $(BUILD_DIR)
 	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built: $@  ($(words $(OBJ)) objects)"
 
 # =========================
 # Object compilation
@@ -64,14 +98,12 @@ $(OBJ_DIR)/%.o: src/%.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 # =========================
-# Test compilation
+# Test binary compilation
 # =========================
 
-# Aqui está a correção do link: usamos $(LIB) como dependência 
-# e garantimos que o binário saia na pasta correta.
 $(TEST_DIR)/%: tests/%.c $(LIB)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $< $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $(TEST_INC) -include libft.h $< $(LDFLAGS) -o $@
 
 # =========================
 # Cleanup
@@ -82,4 +114,5 @@ clean:
 
 re: clean all
 
-.PHONY: all clean re test
+.PHONY: all clean re test test_ds debug
+

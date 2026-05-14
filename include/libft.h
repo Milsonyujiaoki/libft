@@ -71,4 +71,10 @@
 /* ── stdlib conversions ──────────────────────────────── */
 # include "core/stdlib-ft.h"
 
+
+#include "ctype.h"
+#include "string.h"
+#include "memory.h"
+
+
 #endif /* LIBFT_H */

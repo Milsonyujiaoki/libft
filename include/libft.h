@@ -46,7 +46,7 @@
 /* ── Data Structures ─────────────────────────────────── */
 # ifdef LIBFT_FEATURE_DS
 #  include "ds/slist.h"
-#  include "ds/list.h"
+//#  include "ds/list.h"
 #  include "ds/dlist.h"
 #  include "ds/vector.h"
 #  include "ds/stack.h"

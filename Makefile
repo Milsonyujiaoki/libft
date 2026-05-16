@@ -36,21 +36,28 @@ TEST_DIR     = $(BUILD_DIR)/tests
 # =========================================================
 
 STATIC_LIB   = $(STATIC_DIR)/$(NAME).a
-SHARED_LIB   = $(SHARED_DIR)/$(NAME).so
+SHARED_MAJOR  = 1
+SHARED_VERSION = $(SHARED_MAJOR).0.0
+SHARED_SONAME = $(NAME).so.$(SHARED_MAJOR)
+SHARED_LIB    = $(SHARED_DIR)/$(NAME).so.$(SHARED_VERSION)
+SHARED_LIB_MAJOR = $(SHARED_DIR)/$(SHARED_SONAME)
+SHARED_LINK   = $(SHARED_DIR)/$(NAME).so
+SHARED_MAP    = make/libft.map
 
 # =========================================================
 # Compiler flags
 # =========================================================
 
-CFLAGS       = -Wall -Wextra -Werror
-CFLAGS      += -Wpedantic -std=c11
-CFLAGS      += -O2
+CFLAGS       = -Wall -Wextra -Werror # Enable all warnings and treat them as errors
+CFLAGS      += -Wpedantic -std=c11 # Enforce C11 standard and pedantic warnings
+CFLAGS      += -O2 # Optimize for speed (can be adjusted for debugging)
 CFLAGS      += -I$(INC_DIR)
-CFLAGS      += -MMD -MP
+CFLAGS      += -MMD -MP # Dependency Generation
 
-PIC_FLAGS    = -fPIC
+PIC_FLAGS    = -fPIC # Position Independent Code for shared library
 
-LDFLAGS      = -L$(STATIC_DIR) -lft
+LDFLAGS      = -L$(STATIC_DIR) -lft # Link against static library for tests
+SHARED_LDFLAGS = -shared -Wl,-soname,$(SHARED_SONAME) -Wl,--version-script=$(abspath $(SHARED_MAP))
 
 TEST_INC     = -I$(INC_DIR)/core
 
@@ -58,9 +65,9 @@ TEST_INC     = -I$(INC_DIR)/core
 # Debug
 # =========================================================
 
-DEBUG_FLAGS  = -g3
-DEBUG_FLAGS += -DLIBFT_DEBUG
-DEBUG_FLAGS += -fsanitize=address,undefined
+DEBUG_FLAGS  = -g3 # Include debug symbols with maximum level of detail
+DEBUG_FLAGS += -DLIBFT_DEBUG # Define a macro for conditional debug code in the library
+DEBUG_FLAGS += -fsanitize=address,undefined # Enable AddressSanitizer and UndefinedBehaviorSanitizer for runtime checks
 
 debug: CFLAGS += $(DEBUG_FLAGS)
 debug: LDFLAGS += -fsanitize=address,undefined
@@ -129,7 +136,9 @@ $(STATIC_LIB): $(OBJ_STATICS)
 
 $(SHARED_LIB): $(OBJ_SHAREDS)
 	@mkdir -p $(SHARED_DIR)
-	$(CC) -shared -o $@ $^
+	$(CC) $(SHARED_LDFLAGS) -o $@ $^
+	ln -sfn $(notdir $@) $(SHARED_LIB_MAJOR)
+	ln -sfn $(notdir $(SHARED_LIB_MAJOR)) $(SHARED_LINK)
 	@echo "Built shared library: $@"
 
 # =========================================================
@@ -195,14 +204,16 @@ install: static shared
 
 	cp $(INC_DIR)/libft.h $(PREFIX)/include/
 	cp $(STATIC_LIB) $(PREFIX)/lib/
-	cp $(SHARED_LIB) $(PREFIX)/lib/
+	cp -a $(SHARED_DIR)/$(NAME).so* $(PREFIX)/lib/
 
 	@echo "Installed libft to $(PREFIX)"
 
 uninstall:
 	rm -f $(PREFIX)/include/libft.h
 	rm -f $(PREFIX)/lib/libft.a
-	rm -f $(PREFIX)/lib/libft.so
+	rm -f $(PREFIX)/lib/$(NAME).so
+	rm -f $(PREFIX)/lib/$(NAME).so.$(SHARED_MAJOR)
+	rm -f $(PREFIX)/lib/$(NAME).so.$(SHARED_VERSION)
 
 	@echo "Removed libft from $(PREFIX)"
 

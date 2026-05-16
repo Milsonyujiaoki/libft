@@ -26,7 +26,7 @@ Detailed overview of the library:
 - `42 bonus linked list`: canonical 42 list API with `t_list` node and `ft_lst*` functions.
 - `algo`: sorting, searching, hashing, and comparison helpers.
 
-Linked list requirement (42 bonus) implemented:
+Linked list requirement implemented:
 
 - `t_list` is declared in `include/libft.h` as:
   - `void *content`
@@ -44,7 +44,8 @@ Linked list requirement (42 bonus) implemented:
 
 Current project snapshot:
 
-- static library output: `build/libft.a`
+- static library output: `build/static/libft.a`
+- shared library output: `build/shared/libft.so.1.0.0` with `SONAME=libft.so.1`
 - source files: 82 (`src/*/*.c`)
 - test files: 51 (`tests/*/*.c`)
 - main public entrypoint: `include/libft.h`
@@ -95,7 +96,7 @@ gcc -Iinclude your_file.c -Lbuild -lft
 Notes:
 
 - target architecture: x86_64
-- naming convention: `ft_` prefix for symbol isolation
+- naming convention: `ft_` prefix for symbol isolation; shared builds use an export version script and ABI soname versioning
 - project includes compatibility wrappers for legacy DS include paths under `include/ds/linkedList/`
 
 ## Resources

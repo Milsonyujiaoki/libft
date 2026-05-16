@@ -1,13 +1,6 @@
 #include <libft.h>
 
-// Função auxiliar para calcular o tamanho da string (strlen)
-size_t ft_strlen(const char *s) {
-    size_t i = 0;
-    while (s[i] != '\0') {
-        i++;
-    }
-    return i;
-}
+
 
 int ft_puts(const char *s) {
     // Se a string for nula, imprime uma linha vazia ou simula erro

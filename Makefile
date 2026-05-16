@@ -1,122 +1,168 @@
-CC      = gcc
-AR      = ar
-ARFLAGS = rcs
+# =========================================================
+# Compiler / Archiver
+# =========================================================
 
-# =========================
+CC       = gcc
+AR       = ar
+ARFLAGS  = rcs
+
+# =========================================================
+# Project
+# =========================================================
+
+NAME     = libft
+
+# =========================================================
+# Directories
+# =========================================================
+
+SRC_DIR      = src
+TEST_SRC_DIR = tests
+INC_DIR      = include
+
+BUILD_DIR    = build
+
+STATIC_DIR   = $(BUILD_DIR)/static
+SHARED_DIR   = $(BUILD_DIR)/shared
+
+OBJ_DIR      = $(BUILD_DIR)/obj
+OBJ_STATIC   = $(OBJ_DIR)/static
+OBJ_SHARED   = $(OBJ_DIR)/shared
+
+TEST_DIR     = $(BUILD_DIR)/tests
+
+# =========================================================
+# Library output
+# =========================================================
+
+STATIC_LIB   = $(STATIC_DIR)/$(NAME).a
+SHARED_LIB   = $(SHARED_DIR)/$(NAME).so
+
+# =========================================================
 # Compiler flags
-# =========================
+# =========================================================
 
-CFLAGS   = -Wall -Wextra -Werror -Wpedantic -std=c11 -Iinclude
-CFLAGS  += -O2
-LDFLAGS  = -L$(BUILD_DIR) -lft
-TEST_INC = -Iinclude/core
+CFLAGS       = -Wall -Wextra -Werror
+CFLAGS      += -Wpedantic -std=c11
+CFLAGS      += -O2
+CFLAGS      += -I$(INC_DIR)
+CFLAGS      += -MMD -MP
 
-# Debug build: make debug
-debug: CFLAGS += -g -DLIBFT_DEBUG -fsanitize=address,undefined
+PIC_FLAGS    = -fPIC
+
+LDFLAGS      = -L$(STATIC_DIR) -lft
+
+TEST_INC     = -I$(INC_DIR)/core
+
+# =========================================================
+# Debug
+# =========================================================
+
+DEBUG_FLAGS  = -g3
+DEBUG_FLAGS += -DLIBFT_DEBUG
+DEBUG_FLAGS += -fsanitize=address,undefined
+
+debug: CFLAGS += $(DEBUG_FLAGS)
 debug: LDFLAGS += -fsanitize=address,undefined
 debug: all
 
-# =========================
-# Directories
-# =========================
+# =========================================================
+# Sources
+# =========================================================
 
-BUILD_DIR = build
-OBJ_DIR   = $(BUILD_DIR)/obj
-TEST_DIR  = $(BUILD_DIR)/tests
+SRC          = $(wildcard $(SRC_DIR)/*/*.c)
 
-# =========================
-# Library
-# =========================
+OBJ_STATICS  = $(patsubst $(SRC_DIR)/%.c,$(OBJ_STATIC)/%.o,$(SRC))
+OBJ_SHAREDS  = $(patsubst $(SRC_DIR)/%.c,$(OBJ_SHARED)/%.o,$(SRC))
 
-LIB = $(BUILD_DIR)/libft.a
+DEP_STATICS  = $(OBJ_STATICS:.o=.d)
+DEP_SHAREDS  = $(OBJ_SHAREDS:.o=.d)
 
-# All sources: one level deep inside src/ (src/*/*.c)
-# Automatically includes: ctype, memory, stdio, stdlib, string,
-#   unistd, ds, algo, internal — and any future module.
-SRC = $(wildcard src/*/*.c)
-OBJ = $(patsubst src/%.c,$(OBJ_DIR)/%.o,$(SRC))
-
-# =========================
+# =========================================================
 # Tests
-# =========================
+# =========================================================
 
-# tests/*/*.c — covers both legacy (tests/string/*.c) and
-# new module tests (tests/ds/*.c, tests/algo/*.c, etc.)
-TESTS     = $(wildcard tests/*/*.c)
+TESTS        = $(wildcard $(TEST_SRC_DIR)/*/*.c)
 
-TEST_BINS = $(patsubst tests/%.c,$(TEST_DIR)/%,$(TESTS))
+TEST_BINS    = $(patsubst $(TEST_SRC_DIR)/%.c,$(TEST_DIR)/%,$(TESTS))
 
-# =========================
+# =========================================================
 # Main targets
-# =========================
+# =========================================================
 
-all: $(LIB) $(TEST_BINS)
+all: static tests
 
-# Run all tests
+static: $(STATIC_LIB)
+
+shared: $(SHARED_LIB)
+
+tests: $(TEST_BINS)
+
+# =========================================================
+# Static objects
+# =========================================================
+
+$(OBJ_STATIC)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) -c $< -o $@
+
+# =========================================================
+# Shared objects (PIC)
+# =========================================================
+
+$(OBJ_SHARED)/%.o: $(SRC_DIR)/%.c
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(PIC_FLAGS) -c $< -o $@
+
+# =========================================================
+# Static library
+# =========================================================
+
+$(STATIC_LIB): $(OBJ_STATICS)
+	@mkdir -p $(STATIC_DIR)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built static library: $@"
+
+# =========================================================
+# Shared library
+# =========================================================
+
+$(SHARED_LIB): $(OBJ_SHAREDS)
+	@mkdir -p $(SHARED_DIR)
+	$(CC) -shared -o $@ $^
+	@echo "Built shared library: $@"
+
+# =========================================================
+# Test binaries
+# =========================================================
+
+$(TEST_DIR)/%: $(TEST_SRC_DIR)/%.c $(STATIC_LIB)
+	@mkdir -p $(dir $@)
+	$(CC) $(CFLAGS) $(TEST_INC) \
+		-include libft.h \
+		$< $(LDFLAGS) -o $@
+
+# =========================================================
+# Run tests
+# =========================================================
+
 test: all
 	@echo ""
 	@echo "========================================"
-	@echo "  Running test suite"
+	@echo " Running test suite"
 	@echo "========================================"
+
 	@PASS=0; FAIL=0; \
 	for bin in $(TEST_BINS); do \
 		if [ -f $$bin ]; then \
 			echo ""; \
 			echo "--- $$bin ---"; \
 			$$bin; \
-			if [ $$? -eq 0 ]; then PASS=$$((PASS+1)); \
-			else FAIL=$$((FAIL+1)); fi; \
+			if [ $$? -eq 0 ]; then \
+				PASS=$$((PASS+1)); \
+			else \
+				FAIL=$$((FAIL+1)); \
+			fi; \
 		fi; \
 	done; \
 	echo ""; \
-	echo "========================================"; \
-	echo "  Suites: $$PASS passed, $$FAIL failed"; \
-	echo "========================================"; \
-	[ $$FAIL -eq 0 ]
-
-# Run only DS tests
-test_ds: all
-	@for bin in $(TEST_DIR)/ds/*; do \
-		if [ -f $$bin ]; then echo "--- $$bin ---"; $$bin; fi; \
-	done
-
-
-
-# =========================
-# Object compilation
-# =========================
-
-$(OBJ_DIR)/%.o: src/%.c
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) -c $< -o $@
-
-
-$(LIB): $(OBJ)
-	@mkdir -p $(BUILD_DIR)
-	$(AR) $(ARFLAGS) $@ $^
-	@echo "Built: $@  ($(words $(OBJ)) objects)"
-
-
-
-# =========================
-# Test binary compilation
-# =========================
-
-$(TEST_DIR)/%: tests/%.c $(LIB)
-	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(TEST_INC) -include libft.h $< $(LDFLAGS) -o $@
-
-# =========================
-# Cleanup
-# =========================
-
-clean:
-	rm -rf $(BUILD_DIR)
-
-fclean: clean
-	rm -rf $(LIB)
-
-re: clean all
-
-.PHONY: all clean re test test_ds debug
-

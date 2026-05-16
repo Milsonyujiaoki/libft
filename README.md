@@ -97,7 +97,27 @@ Notes:
 
 - target architecture: x86_64
 - naming convention: `ft_` prefix for symbol isolation; shared builds use an export version script and ABI soname versioning
+- public headers should expose only stable API declarations; during visibility-hardening, mark exported declarations with `LIBFT_API` from `include/core/compiler.h`
 - project includes compatibility wrappers for legacy DS include paths under `include/ds/linkedList/`
+
+## Public API Visibility (Phase 3)
+
+Objective:
+
+- annotate public function declarations in headers with `LIBFT_API`;
+- keep helpers/private utilities unannotated;
+- apply changes by module in this order: `ctype -> memory -> string -> ds -> algo -> io -> sys`.
+
+Suggested manual workflow:
+
+1. Ensure each public header can see `LIBFT_API` (include `core/compiler.h` if needed).
+2. Prefix each public declaration with `LIBFT_API`.
+3. Rebuild and run tests after each module.
+4. Check exported shared symbols with `nm -D`.
+
+Detailed step-by-step guide:
+
+- `Dev/notas/04-fase3-libft_api_manual.md`
 
 ## Resources
 

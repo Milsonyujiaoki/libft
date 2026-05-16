@@ -80,14 +80,7 @@ test_ds: all
 		if [ -f $$bin ]; then echo "--- $$bin ---"; $$bin; fi; \
 	done
 
-# =========================
-# Library compilation
-# =========================
 
-$(LIB): $(OBJ)
-	@mkdir -p $(BUILD_DIR)
-	$(AR) $(ARFLAGS) $@ $^
-	@echo "Built: $@  ($(words $(OBJ)) objects)"
 
 # =========================
 # Object compilation
@@ -96,6 +89,14 @@ $(LIB): $(OBJ)
 $(OBJ_DIR)/%.o: src/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
+
+
+$(LIB): $(OBJ)
+	@mkdir -p $(BUILD_DIR)
+	$(AR) $(ARFLAGS) $@ $^
+	@echo "Built: $@  ($(words $(OBJ)) objects)"
+
+
 
 # =========================
 # Test binary compilation
@@ -111,6 +112,9 @@ $(TEST_DIR)/%: tests/%.c $(LIB)
 
 clean:
 	rm -rf $(BUILD_DIR)
+
+fclean: clean
+	rm -rf $(LIB)
 
 re: clean all
 

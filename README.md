@@ -4,7 +4,7 @@
 
 ## Description
 
-mini_libc is an educational C library that reimplements common libc behavior and extends it with modular utilities for data structures, memory helpers, and algorithms.
+libft is an educational C library that reimplements common libc behavior and extends it with modular utilities for data structures, memory helpers, and algorithms.
 
 Project goals:
 

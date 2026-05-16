@@ -166,3 +166,78 @@ test: all
 		fi; \
 	done; \
 	echo ""; \
+	echo "========================================"; \
+	echo " Suites: $$PASS passed, $$FAIL failed"; \
+	echo "========================================"; \
+	[ $$FAIL -eq 0 ]
+
+# =========================================================
+# DS tests only
+# =========================================================
+
+test_ds: all
+	@for bin in $(TEST_DIR)/ds/*; do \
+		if [ -f $$bin ]; then \
+			echo "--- $$bin ---"; \
+			$$bin; \
+		fi; \
+	done
+
+# =========================================================
+# Install / Uninstall
+# =========================================================
+
+PREFIX ?= /usr/local
+
+install: static shared
+	@mkdir -p $(PREFIX)/include
+	@mkdir -p $(PREFIX)/lib
+
+	cp $(INC_DIR)/libft.h $(PREFIX)/include/
+	cp $(STATIC_LIB) $(PREFIX)/lib/
+	cp $(SHARED_LIB) $(PREFIX)/lib/
+
+	@echo "Installed libft to $(PREFIX)"
+
+uninstall:
+	rm -f $(PREFIX)/include/libft.h
+	rm -f $(PREFIX)/lib/libft.a
+	rm -f $(PREFIX)/lib/libft.so
+
+	@echo "Removed libft from $(PREFIX)"
+
+# =========================================================
+# Cleanup
+# =========================================================
+
+clean:
+	rm -rf $(BUILD_DIR)
+
+fclean: clean
+
+re: fclean all
+
+# =========================================================
+# Dependency files
+# =========================================================
+
+-include $(DEP_STATICS)
+-include $(DEP_SHAREDS)
+
+# =========================================================
+# Phony
+# =========================================================
+
+.PHONY: \
+	all \
+	static \
+	shared \
+	tests \
+	test \
+	test_ds \
+	debug \
+	install \
+	uninstall \
+	clean \
+	fclean \
+	re

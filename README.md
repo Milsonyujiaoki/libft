@@ -15,16 +15,13 @@ Project goals:
 
 Detailed overview of the library:
 
-- `core`: fixed-width types, status codes, configuration macros, compiler helpers.
+- `core`: fixed-width types, compiler helpers and configuration macros.
 - `ctype`: character classification and case conversion (`ft_is*`, `ft_to*`).
 - `string`: string operations and helpers (copy, compare, search, split, trim, tokenization).
-- `memory`: raw memory operations and allocators (`mem*`, arena, pool, buffer).
-- `stdlib-ft`: conversion utilities (`ft_atoi`, `ft_atol`, `ft_itoa`, etc.).
-- `io/stdio`: output/input helpers and formatted output wrappers.
-- `sys/unistd`: wrappers for basic POSIX calls (`read`, `write`, `close`).
-- `ds`: custom containers (`t_slist`, `t_dlist`, `t_vector`, `t_stack`, `t_queue`).
-- `42 bonus linked list`: canonical 42 list API with `t_list` node and `ft_lst*` functions.
-- `algo`: sorting, searching, hashing, and comparison helpers.
+- `memory`: raw memory operations and allocators (`ft_mem*`, `ft_malloc`, `ft_free`).
+- `stdlib`: conversion utilities (`ft_atoi`, `ft_itoa`, `ft_calloc`, `ft_strdup`, etc.).
+- `io/stdio`: output helpers (`ft_putchar_fd`, `ft_putstr_fd`, `ft_putendl_fd`, `ft_putnbr_fd`).
+- `ds`: custom containers (`t_slist` / `ft_lst*`, `t_dlist`, `t_vector`, `t_stack`, `t_queue`).
 
 Linked list requirement implemented:
 
@@ -45,10 +42,8 @@ Linked list requirement implemented:
 Current project snapshot:
 
 - static library output: `build/static/libft.a`
-- shared library output: `build/shared/libft.so.1.0.0` with `SONAME=libft.so.1`
-- symlink chain: `build/shared/libft.so -> libft.so.1 -> libft.so.1.0.0`
-- source files: 82 (`src/*/*.c`)
-- test files: 51 (`tests/*/*.c`)
+- source files: 72 (`src/*/*.c`)
+- test files: 49 (`tests/*/*.c`)
 - main public entrypoint: `include/libft.h`
 
 ## Instructions
@@ -110,29 +105,8 @@ gcc -Iinclude your_file.c -Lbuild/shared -l:libft.so
 
 Notes:
 
-- target architecture: x86_64
-- naming convention: `ft_` prefix for symbol isolation; shared builds use an export version script and ABI soname versioning
-- public headers should expose only stable API declarations; during visibility-hardening, mark exported declarations with `LIBFT_API` from `include/core/compiler.h`
-- project includes compatibility wrappers for legacy DS include paths under `include/ds/linkedList/`
-
-## Public API Visibility (Phase 3)
-
-Objective:
-
-- annotate public function declarations in headers with `LIBFT_API`;
-- keep helpers/private utilities unannotated;
-- apply changes by module in this order: `ctype -> memory -> string -> ds -> algo -> io -> sys`.
-
-Suggested manual workflow:
-
-1. Ensure each public header can see `LIBFT_API` (include `core/compiler.h` if needed).
-2. Prefix each public declaration with `LIBFT_API`.
-3. Rebuild and run tests after each module.
-4. Check exported shared symbols with `nm -D`.
-
-Detailed step-by-step guide:
-
-- `Dev/notas/04-fase3-libft_api_manual.md`
+- naming convention: `ft_` prefix for all exported symbols
+- all data structure headers are always included via `include/libft.h`; no feature flags required
 
 ## Resources
 
@@ -147,9 +121,10 @@ Classic references for libc and low-level C:
 
 How AI was used in this project:
 
-- AI assisted in refactoring module headers and include-path organization.
-- AI assisted in drafting and restructuring this README according to 42 requirements.
-- AI was used as an implementation and review accelerator; all changes were compiled and tested locally afterward.
+- AI assisted in simplifying data structure headers (`dlist`, `vector`, `stack`, `queue`, `slist`): replaced custom type aliases with standard C inline function pointers to match the project's simple style.
+- AI assisted in fixing compilation errors across DS sources: missing includes, undefined constants, and missing include guards.
+- AI assisted in restructuring and updating this README according to 42 requirements.
+- All changes were compiled and tested locally; 49 test suites pass with zero failures.
 
 ## License
 

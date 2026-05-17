@@ -2,7 +2,7 @@
 # define LIBFT_DS_QUEUE_H
 
 # include "../core/types.h"
-# include "../core/defs.h"
+
 # include "dlist.h"
 
 /*
@@ -30,13 +30,13 @@ typedef struct s_queue
 
 t_queue     *ft_queue_create(void);
 void         ft_queue_destroy(t_queue *queue);
-void         ft_queue_destroy_deep(t_queue *queue, t_free_fn free_fn);
+void         ft_queue_destroy_deep(t_queue *queue, void (*free_fn)(void *));
 
 /*
 ** ──── Operations ───────────────────────────────────────── */
 
 /* Add elem to the back of the queue. */
-t_ft_status  ft_queue_enqueue(t_queue *queue, void *elem);
+int          ft_queue_enqueue(t_queue *queue, void *elem);
 
 /* Remove and return the front element.  Returns NULL if empty. */
 void        *ft_queue_dequeue(t_queue *queue);

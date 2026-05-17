@@ -1,4 +1,4 @@
-#include <stdlib-ft.h>
+#include "core/stdlibft.h"
 #include <stdio.h>
 
 int main() {

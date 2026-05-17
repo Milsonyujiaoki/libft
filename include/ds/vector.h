@@ -2,8 +2,9 @@
 # define LIBFT_DS_VECTOR_H
 
 # include "../core/types.h"
-# include "../core/defs.h"
-# include "../core/config.h"
+
+# define LIBFT_VECTOR_INIT_CAPACITY 8
+# define LIBFT_VECTOR_GROW_FACTOR   2
 
 /*
 ** =========================================================
@@ -45,23 +46,23 @@ t_vector    *ft_vector_create_cap(t_usize elem_size, t_usize capacity);
 void         ft_vector_destroy(t_vector *vec);
 
 /* Calls free_fn on each stored element (treats data as void **). */
-void         ft_vector_destroy_deep(t_vector *vec, t_free_fn free_fn);
+void         ft_vector_destroy_deep(t_vector *vec, void (*free_fn)(void *));
 
 /*
 ** ──── Insertion / Removal ──────────────────────────────── */
 
 /* Copy elem_size bytes from elem into the back of the vector. */
-t_ft_status  ft_vector_push(t_vector *vec, const void *elem);
+int          ft_vector_push(t_vector *vec, const void *elem);
 
 /* Copy the back element into out (if non-NULL), then remove it. */
-t_ft_status  ft_vector_pop(t_vector *vec, void *out);
+int          ft_vector_pop(t_vector *vec, void *out);
 
 /* Insert a copy of elem at position index, shifting right. */
-t_ft_status  ft_vector_insert(t_vector *vec, t_usize index,
+int          ft_vector_insert(t_vector *vec, t_usize index,
                 const void *elem);
 
-/* Remove element at index, shifting left.  Returns FT_ERANGE if OOB. */
-t_ft_status  ft_vector_remove(t_vector *vec, t_usize index);
+/* Remove element at index, shifting left.  Returns 0 if out of bounds. */
+int          ft_vector_remove(t_vector *vec, t_usize index);
 
 /*
 ** ──── Access ───────────────────────────────────────────── */
@@ -72,7 +73,7 @@ void        *ft_vector_front(const t_vector *vec);
 void        *ft_vector_back(const t_vector *vec);
 
 /* Overwrite element at index with a copy of elem. */
-t_ft_status  ft_vector_set(t_vector *vec, t_usize index, const void *elem);
+int          ft_vector_set(t_vector *vec, t_usize index, const void *elem);
 
 /*
 ** ──── Query ────────────────────────────────────────────── */
@@ -85,10 +86,10 @@ t_bool       ft_vector_empty(const t_vector *vec);
 ** ──── Capacity management ──────────────────────────────── */
 
 /* Ensure capacity >= new_capacity.  No-op if already sufficient. */
-t_ft_status  ft_vector_reserve(t_vector *vec, t_usize new_capacity);
+int          ft_vector_reserve(t_vector *vec, t_usize new_capacity);
 
 /* Reduce capacity to exactly size.  Frees unused memory. */
-t_ft_status  ft_vector_shrink(t_vector *vec);
+int          ft_vector_shrink(t_vector *vec);
 
 /* Set size to zero.  Keeps backing allocation. */
 void         ft_vector_clear(t_vector *vec);
@@ -96,13 +97,13 @@ void         ft_vector_clear(t_vector *vec);
 /*
 ** ──── Traversal ────────────────────────────────────────── */
 
-void         ft_vector_foreach(t_vector *vec, t_visit_fn fn, void *ctx);
+void         ft_vector_foreach(t_vector *vec, void (*fn)(void *, void *), void *ctx);
 
 /*
 ** ──── Search ───────────────────────────────────────────── */
 
-/* Returns index of first match, or FT_ENOTFOUND (-5). */
-t_isize      ft_vector_find(const t_vector *vec, t_pred_fn pred,
+/* Returns index of first match, or -1 if not found. */
+t_isize      ft_vector_find(const t_vector *vec, int (*pred)(void *, const void *),
                 const void *ctx);
 
 #endif /* LIBFT_DS_VECTOR_H */

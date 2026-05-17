@@ -1,5 +1,6 @@
-#include "internal/internal.h"
+
 #include "ds/queue.h"
+#include "memory/alloc.h"
 
 /*
 ** =========================================================
@@ -31,7 +32,7 @@ void    ft_queue_destroy(t_queue *queue)
     ft_free(queue);
 }
 
-void    ft_queue_destroy_deep(t_queue *queue, t_free_fn free_fn)
+void    ft_queue_destroy_deep(t_queue *queue, void (*free_fn)(void *))
 {
     if (!queue)
         return ;
@@ -39,10 +40,10 @@ void    ft_queue_destroy_deep(t_queue *queue, t_free_fn free_fn)
     ft_free(queue);
 }
 
-t_ft_status ft_queue_enqueue(t_queue *queue, void *elem)
+int ft_queue_enqueue(t_queue *queue, void *elem)
 {
     if (!queue)
-        return (FT_EINVAL);
+        return (0);
     return (ft_dlist_push_back(queue->list, elem));
 }
 

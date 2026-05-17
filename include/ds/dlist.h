@@ -2,7 +2,7 @@
 # define LIBFT_DS_DLIST_H
 
 # include "../core/types.h"
-# include "../core/defs.h"
+
 
 /*
 ** =========================================================
@@ -39,16 +39,16 @@ typedef struct s_dlist
 
 t_dlist     *ft_dlist_create(void);
 void         ft_dlist_destroy(t_dlist *list);
-void         ft_dlist_destroy_deep(t_dlist *list, t_free_fn free_fn);
+void         ft_dlist_destroy_deep(t_dlist *list, void (*free_fn)(void *));
 
 /*
 ** ---- Insertion ------------------------------------------ */
 
-t_ft_status  ft_dlist_push_front(t_dlist *list, void *data);
-t_ft_status  ft_dlist_push_back(t_dlist *list, void *data);
-t_ft_status  ft_dlist_insert_after(t_dlist *list,
+int          ft_dlist_push_front(t_dlist *list, void *data);
+int          ft_dlist_push_back(t_dlist *list, void *data);
+int          ft_dlist_insert_after(t_dlist *list,
                 t_dlist_node *node, void *data);
-t_ft_status  ft_dlist_insert_before(t_dlist *list,
+int          ft_dlist_insert_before(t_dlist *list,
                 t_dlist_node *node, void *data);
 
 /*
@@ -73,13 +73,13 @@ t_bool       ft_dlist_empty(const t_dlist *list);
 /*
 ** ---- Traversal ------------------------------------------ */
 
-void         ft_dlist_foreach(t_dlist *list, t_visit_fn fn, void *ctx);
-void         ft_dlist_foreach_reverse(t_dlist *list, t_visit_fn fn, void *ctx);
+void         ft_dlist_foreach(t_dlist *list, void (*fn)(void *, void *), void *ctx);
+void         ft_dlist_foreach_reverse(t_dlist *list, void (*fn)(void *, void *), void *ctx);
 
 /*
 ** ---- Search --------------------------------------------- */
 
-t_dlist_node *ft_dlist_find(const t_dlist *list, t_pred_fn pred,
+t_dlist_node *ft_dlist_find(const t_dlist *list, int (*pred)(void *, const void *),
                 const void *ctx);
 
 #endif /* LIBFT_DS_DLIST_H */

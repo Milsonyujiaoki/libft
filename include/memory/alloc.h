@@ -2,7 +2,7 @@
 # define LIBFT_MEMORY_ALLOC_H
 
 # include "../core/types.h"
-# include "../core/compiler.h"
+
 
 /*
 ** =========================================================
@@ -19,8 +19,8 @@
 ** =========================================================
 */
 
-LIBFT_MALLOC_ATTR void  *ft_malloc(t_usize size);
-LIBFT_MALLOC_ATTR void  *ft_calloc(t_usize count, t_usize size);
+void  *ft_malloc(t_usize size);
+void  *ft_calloc(t_usize count, t_usize size);
 void                    *ft_realloc(void *ptr, t_usize new_size);
 void                     ft_free(void *ptr);
 

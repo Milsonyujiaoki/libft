@@ -1,5 +1,6 @@
-#include "internal/internal.h"
+
 #include "ds/stack.h"
+#include "memory/alloc.h"
 
 /*
 ** =========================================================
@@ -11,7 +12,6 @@ t_stack *ft_stack_create(t_usize elem_size)
 {
     t_stack *stack;
 
-    LIBFT_ASSERT(elem_size > 0);
     stack = ft_malloc(sizeof(t_stack));
     if (!stack)
         return (NULL);
@@ -32,7 +32,7 @@ void    ft_stack_destroy(t_stack *stack)
     ft_free(stack);
 }
 
-void    ft_stack_destroy_deep(t_stack *stack, t_free_fn free_fn)
+void    ft_stack_destroy_deep(t_stack *stack, void (*free_fn)(void *))
 {
     if (!stack)
         return ;
@@ -40,17 +40,17 @@ void    ft_stack_destroy_deep(t_stack *stack, t_free_fn free_fn)
     ft_free(stack);
 }
 
-t_ft_status ft_stack_push(t_stack *stack, const void *elem)
+int ft_stack_push(t_stack *stack, const void *elem)
 {
     if (!stack || !elem)
-        return (FT_EINVAL);
+        return (0);
     return (ft_vector_push(stack->vec, elem));
 }
 
-t_ft_status ft_stack_pop(t_stack *stack, void *out)
+int ft_stack_pop(t_stack *stack, void *out)
 {
     if (!stack)
-        return (FT_EINVAL);
+        return (0);
     return (ft_vector_pop(stack->vec, out));
 }
 

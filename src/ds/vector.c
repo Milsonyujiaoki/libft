@@ -1,5 +1,6 @@
-#include "internal/internal.h"
+
 #include "ds/vector.h"
+#include "memory/alloc.h"
 #include "memory/memory.h"
 
 /*
@@ -20,7 +21,7 @@ static void *elem_ptr(const t_vector *vec, t_usize index)
     return ((t_byte *)vec->data + index * vec->elem_size);
 }
 
-static t_ft_status  grow(t_vector *vec)
+static int  grow(t_vector *vec)
 {
     t_usize new_cap;
     void    *new_data;
@@ -31,10 +32,10 @@ static t_ft_status  grow(t_vector *vec)
         new_cap = vec->capacity * LIBFT_VECTOR_GROW_FACTOR;
     new_data = ft_realloc(vec->data, new_cap * vec->elem_size);
     if (!new_data)
-        return (FT_ENOMEM);
+        return (0);
     vec->data = new_data;
     vec->capacity = new_cap;
-    return (FT_OK);
+    return (1);
 }
 
 /* ── Lifecycle ───────────────────────────────────────── */
@@ -48,7 +49,6 @@ t_vector    *ft_vector_create_cap(t_usize elem_size, t_usize capacity)
 {
     t_vector    *vec;
 
-    LIBFT_ASSERT(elem_size > 0);
     vec = ft_malloc(sizeof(t_vector));
     if (!vec)
         return (NULL);
@@ -77,7 +77,7 @@ void    ft_vector_destroy(t_vector *vec)
     ft_free(vec);
 }
 
-void    ft_vector_destroy_deep(t_vector *vec, t_free_fn free_fn)
+void    ft_vector_destroy_deep(t_vector *vec, void (*free_fn)(void *))
 {
     t_usize i;
 
@@ -98,40 +98,40 @@ void    ft_vector_destroy_deep(t_vector *vec, t_free_fn free_fn)
 
 /* ── Insertion / Removal ─────────────────────────────── */
 
-t_ft_status ft_vector_push(t_vector *vec, const void *elem)
+int ft_vector_push(t_vector *vec, const void *elem)
 {
     if (!vec || !elem)
-        return (FT_EINVAL);
+        return (0);
     if (vec->size == vec->capacity)
     {
-        if (grow(vec) != FT_OK)
-            return (FT_ENOMEM);
+        if (grow(vec) != 1)
+            return (0);
     }
     ft_memcpy(elem_ptr(vec, vec->size), elem, vec->elem_size);
     vec->size++;
-    return (FT_OK);
+    return (1);
 }
 
-t_ft_status ft_vector_pop(t_vector *vec, void *out)
+int ft_vector_pop(t_vector *vec, void *out)
 {
     if (!vec || vec->size == 0)
-        return (FT_EEMPTY);
+        return (0);
     vec->size--;
     if (out)
         ft_memcpy(out, elem_ptr(vec, vec->size), vec->elem_size);
-    return (FT_OK);
+    return (1);
 }
 
-t_ft_status ft_vector_insert(t_vector *vec, t_usize index, const void *elem)
+int ft_vector_insert(t_vector *vec, t_usize index, const void *elem)
 {
     t_usize bytes_to_move;
 
     if (!vec || !elem || index > vec->size)
-        return (FT_EINVAL);
+        return (0);
     if (vec->size == vec->capacity)
     {
-        if (grow(vec) != FT_OK)
-            return (FT_ENOMEM);
+        if (grow(vec) != 1)
+            return (0);
     }
     bytes_to_move = (vec->size - index) * vec->elem_size;
     if (bytes_to_move > 0)
@@ -139,21 +139,21 @@ t_ft_status ft_vector_insert(t_vector *vec, t_usize index, const void *elem)
             bytes_to_move);
     ft_memcpy(elem_ptr(vec, index), elem, vec->elem_size);
     vec->size++;
-    return (FT_OK);
+    return (1);
 }
 
-t_ft_status ft_vector_remove(t_vector *vec, t_usize index)
+int ft_vector_remove(t_vector *vec, t_usize index)
 {
     t_usize bytes_to_move;
 
     if (!vec || index >= vec->size)
-        return (FT_ERANGE);
+        return (0);
     bytes_to_move = (vec->size - index - 1) * vec->elem_size;
     if (bytes_to_move > 0)
         ft_memmove(elem_ptr(vec, index), elem_ptr(vec, index + 1),
             bytes_to_move);
     vec->size--;
-    return (FT_OK);
+    return (1);
 }
 
 /* ── Access ──────────────────────────────────────────── */
@@ -179,12 +179,12 @@ void    *ft_vector_back(const t_vector *vec)
     return (elem_ptr(vec, vec->size - 1));
 }
 
-t_ft_status ft_vector_set(t_vector *vec, t_usize index, const void *elem)
+int ft_vector_set(t_vector *vec, t_usize index, const void *elem)
 {
     if (!vec || !elem || index >= vec->size)
-        return (FT_EINVAL);
+        return (0);
     ft_memcpy(elem_ptr(vec, index), elem, vec->elem_size);
-    return (FT_OK);
+    return (1);
 }
 
 /* ── Query ───────────────────────────────────────────── */
@@ -210,41 +210,41 @@ t_bool  ft_vector_empty(const t_vector *vec)
 
 /* ── Capacity management ─────────────────────────────── */
 
-t_ft_status ft_vector_reserve(t_vector *vec, t_usize new_cap)
+int ft_vector_reserve(t_vector *vec, t_usize new_cap)
 {
     void    *new_data;
 
     if (!vec)
-        return (FT_EINVAL);
+        return (0);
     if (new_cap <= vec->capacity)
-        return (FT_OK);
+        return (1);
     new_data = ft_realloc(vec->data, new_cap * vec->elem_size);
     if (!new_data)
-        return (FT_ENOMEM);
+        return (0);
     vec->data = new_data;
     vec->capacity = new_cap;
-    return (FT_OK);
+    return (1);
 }
 
-t_ft_status ft_vector_shrink(t_vector *vec)
+int ft_vector_shrink(t_vector *vec)
 {
     void    *new_data;
 
     if (!vec || vec->size == vec->capacity)
-        return (FT_OK);
+        return (1);
     if (vec->size == 0)
     {
         ft_free(vec->data);
         vec->data = NULL;
         vec->capacity = 0;
-        return (FT_OK);
+        return (1);
     }
     new_data = ft_realloc(vec->data, vec->size * vec->elem_size);
     if (!new_data)
-        return (FT_ENOMEM);
+        return (0);
     vec->data = new_data;
     vec->capacity = vec->size;
-    return (FT_OK);
+    return (1);
 }
 
 void    ft_vector_clear(t_vector *vec)
@@ -255,7 +255,7 @@ void    ft_vector_clear(t_vector *vec)
 
 /* ── Traversal ───────────────────────────────────────── */
 
-void    ft_vector_foreach(t_vector *vec, t_visit_fn fn, void *ctx)
+void    ft_vector_foreach(t_vector *vec, void (*fn)(void *, void *), void *ctx)
 {
     t_usize i;
 
@@ -271,12 +271,12 @@ void    ft_vector_foreach(t_vector *vec, t_visit_fn fn, void *ctx)
 
 /* ── Search ──────────────────────────────────────────── */
 
-t_isize ft_vector_find(const t_vector *vec, t_pred_fn pred, const void *ctx)
+t_isize ft_vector_find(const t_vector *vec, int (*pred)(void *, const void *), const void *ctx)
 {
     t_usize i;
 
     if (!vec || !pred)
-        return (FT_ENOTFOUND);
+        return ((-1));
     i = 0;
     while (i < vec->size)
     {
@@ -284,5 +284,5 @@ t_isize ft_vector_find(const t_vector *vec, t_pred_fn pred, const void *ctx)
             return ((t_isize)i);
         i++;
     }
-    return (FT_ENOTFOUND);
+    return ((-1));
 }

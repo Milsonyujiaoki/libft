@@ -1,3 +1,6 @@
+#ifndef LIBFT_DS_SLIST_H
+# define LIBFT_DS_SLIST_H
+
 /*
 ** =========================================================
 ** linked list (t_list) — public header
@@ -22,3 +25,4 @@ t_list  *ft_lstmap(t_list *lst, void *(*f)(void *), void (*del)(void *)); //cria
 void   ft_print_list(t_list *lst); //função auxiliar para imprimir o proximo no e o conteudo do nó, usando ft_putstr_fd para imprimir o conteúdo, e ft_putstr para imprimir a seta "->" entre os nós. 
 
 void    ft_printf_lst(t_list *lst, void (*print_data)(void *)); //função auxiliar para imprimir o status da lista usando ft_printf, indicando se a lista está vazia ou não, e mostrando o conteúdo de cada nó de forma formatada.
+#endif /* LIBFT_DS_SLIST_H */

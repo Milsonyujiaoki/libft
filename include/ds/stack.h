@@ -2,7 +2,7 @@
 # define LIBFT_DS_STACK_H
 
 # include "../core/types.h"
-# include "../core/defs.h"
+
 # include "vector.h"
 
 /*
@@ -31,13 +31,13 @@ typedef struct s_stack
 
 t_stack     *ft_stack_create(t_usize elem_size);
 void         ft_stack_destroy(t_stack *stack);
-void         ft_stack_destroy_deep(t_stack *stack, t_free_fn free_fn);
+void         ft_stack_destroy_deep(t_stack *stack, void (*free_fn)(void *));
 
 /*
 ** ──── Operations ───────────────────────────────────────── */
 
-t_ft_status  ft_stack_push(t_stack *stack, const void *elem);
-t_ft_status  ft_stack_pop(t_stack *stack, void *out);
+int          ft_stack_push(t_stack *stack, const void *elem);
+int          ft_stack_pop(t_stack *stack, void *out);
 
 /* Returns a pointer to the top element without removing it.
 ** Returns NULL if the stack is empty. */

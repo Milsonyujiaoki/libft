@@ -1,6 +1,6 @@
-#include "internal/internal.h"
+
 #include "ds/list.h"
-#include "memory/memory.h"
+#include "memory/alloc.h"
 
 /*
 ** =========================================================
@@ -53,7 +53,7 @@ void    ft_list_destroy(t_slist *list)
     ft_free(list);
 }
 
-void    ft_list_destroy_deep(t_slist *list, t_free_fn free_fn)
+void    ft_list_destroy_deep(t_slist *list, void (*free_fn)(void *))
 {
     t_slist_node *cur;
     t_slist_node *next;
@@ -74,31 +74,31 @@ void    ft_list_destroy_deep(t_slist *list, t_free_fn free_fn)
 
 /* ── Insertion ───────────────────────────────────────── */
 
-t_ft_status ft_list_push_front(t_slist *list, void *data)
+int ft_list_push_front(t_slist *list, void *data)
 {
     t_slist_node *node;
 
     if (!list)
-        return (FT_EINVAL);
+        return (0);
     node = node_create(data);
     if (!node)
-        return (FT_ENOMEM);
+        return (0);
     node->next = list->head;
     list->head = node;
     list->size++;
-    return (FT_OK);
+    return (1);
 }
 
-t_ft_status ft_list_push_back(t_slist *list, void *data)
+int ft_list_push_back(t_slist *list, void *data)
 {
     t_slist_node *node;
     t_slist_node *cur;
 
     if (!list)
-        return (FT_EINVAL);
+        return (0);
     node = node_create(data);
     if (!node)
-        return (FT_ENOMEM);
+        return (0);
     if (!list->head)
     {
         list->head = node;
@@ -111,22 +111,22 @@ t_ft_status ft_list_push_back(t_slist *list, void *data)
         cur->next = node;
     }
     list->size++;
-    return (FT_OK);
+    return (1);
 }
 
-t_ft_status ft_list_insert_at(t_slist *list, t_usize index, void *data)
+int ft_list_insert_at(t_slist *list, t_usize index, void *data)
 {
     t_slist_node *node;
     t_slist_node *cur;
     t_usize      i;
 
     if (!list || index > list->size)
-        return (FT_EINVAL);
+        return (0);
     if (index == 0)
         return (ft_list_push_front(list, data));
     node = node_create(data);
     if (!node)
-        return (FT_ENOMEM);
+        return (0);
     cur = list->head;
     i = 0;
     while (i < index - 1)
@@ -137,7 +137,7 @@ t_ft_status ft_list_insert_at(t_slist *list, t_usize index, void *data)
     node->next = cur->next;
     cur->next = node;
     list->size++;
-    return (FT_OK);
+    return (1);
 }
 
 /* ── Removal ─────────────────────────────────────────── */
@@ -225,7 +225,7 @@ t_bool  ft_list_empty(const t_slist *list)
 
 /* ── Traversal ───────────────────────────────────────── */
 
-void    ft_list_foreach(t_slist *list, t_visit_fn fn, void *ctx)
+void    ft_list_foreach(t_slist *list, void (*fn)(void *, void *), void *ctx)
 {
     t_slist_node *cur;
 
@@ -241,7 +241,7 @@ void    ft_list_foreach(t_slist *list, t_visit_fn fn, void *ctx)
 
 /* ── Search ──────────────────────────────────────────── */
 
-t_slist_node *ft_list_find(const t_slist *list, t_pred_fn pred,
+t_slist_node *ft_list_find(const t_slist *list, int (*pred)(void *, const void *),
                 const void *ctx)
 {
     t_slist_node *cur;

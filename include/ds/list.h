@@ -2,7 +2,7 @@
 # define LIBFT_DS_LIST_H
 
 # include "../core/types.h"
-# include "../core/defs.h"
+
 
 /*
 ** =========================================================
@@ -38,14 +38,14 @@ typedef struct s_slist
 
 t_slist      *ft_list_create(void);
 void          ft_list_destroy(t_slist *list);
-void          ft_list_destroy_deep(t_slist *list, t_free_fn free_fn);
+void          ft_list_destroy_deep(t_slist *list, void (*free_fn)(void *));
 
 /*
 ** ---- Insertion ------------------------------------------ */
 
-t_ft_status   ft_list_push_front(t_slist *list, void *data);
-t_ft_status   ft_list_push_back(t_slist *list, void *data);
-t_ft_status   ft_list_insert_at(t_slist *list, t_usize index, void *data);
+int           ft_list_push_front(t_slist *list, void *data);
+int           ft_list_push_back(t_slist *list, void *data);
+int           ft_list_insert_at(t_slist *list, t_usize index, void *data);
 
 /*
 ** ---- Removal -------------------------------------------- */
@@ -68,12 +68,12 @@ t_bool        ft_list_empty(const t_slist *list);
 /*
 ** ---- Traversal ------------------------------------------ */
 
-void          ft_list_foreach(t_slist *list, t_visit_fn fn, void *ctx);
+void          ft_list_foreach(t_slist *list, void (*fn)(void *, void *), void *ctx);
 
 /*
 ** ---- Search --------------------------------------------- */
 
-t_slist_node *ft_list_find(const t_slist *list, t_pred_fn pred,
+t_slist_node *ft_list_find(const t_slist *list, int (*pred)(void *, const void *),
                 const void *ctx);
 
 /*

@@ -1,0 +1,6 @@
+LIBFT_1.0 {
+    global:
+        ft_*;
+    local:
+        *;
+};

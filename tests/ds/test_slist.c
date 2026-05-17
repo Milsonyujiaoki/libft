@@ -1,5 +1,10 @@
 #include "libft.h"
-#
+
+
+static void print_int(void *data)
+{
+    ft_putnbr_fd(*(int *)data, 1);
+}
 
 
 /* ── ft_lstnew ───────────────────────────────────────── */
@@ -36,8 +41,7 @@ static void test_ft_lstnew(void)
     else
         ft_printf("[ERRO] O ponteiro 'next' não está a apontar para NULL.\n");
 
-    
-    ft_printf_lst(n, (void (*)(void *))ft_putnbr_fd); // Imprime o status da lista usando ft_printf
+    ft_printf_lst(n, print_int); // Imprime o status da lista usando ft_printf
     
     // Limpeza segura da memória
     ft_lstdelone(n, del);
@@ -52,8 +56,7 @@ static void test_ft_lstnew(void)
 
     }
 
-    ft_print_list(head); // Imprime a lista para verificação visual
-    ft_printf_lst(head, (void (*)(void *))ft_putnbr_fd); // Imprime o status da lista usando ft_printf
+    ft_printf_lst(head, print_int); // Imprime o status da lista usando ft_printf
 
     // Limpeza segura da memória
     ft_lstclear(&head, del);

@@ -36,9 +36,8 @@ static void test_ft_lstnew(void)
     else
         ft_printf("[ERRO] O ponteiro 'next' não está a apontar para NULL.\n");
 
-    ft_print_list(n); // Imprime a lista para verificação visual
     
-    ft_print_lst(n); // Imprime o status da lista usando ft_printf
+    ft_printf_lst(n, (void (*)(void *))ft_putnbr_fd); // Imprime o status da lista usando ft_printf
     
     // Limpeza segura da memória
     ft_lstdelone(n, del);

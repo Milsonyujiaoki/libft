@@ -1,0 +1,23 @@
+==268694== Memcheck, a memory error detector
+==268694== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==268694== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==268694== Command: build/tests/string/test_strtok
+==268694== 
+Token: Aprender
+Token: C
+Token: e
+Token: fixe
+Token: o
+Token: conhecimento
+Token: com
+Token: projetos
+Token: práticos
+==268694== 
+==268694== HEAP SUMMARY:
+==268694==     in use at exit: 0 bytes in 0 blocks
+==268694==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==268694== 
+==268694== All heap blocks were freed -- no leaks are possible
+==268694== 
+==268694== For lists of detected and suppressed errors, rerun with: -s
+==268694== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

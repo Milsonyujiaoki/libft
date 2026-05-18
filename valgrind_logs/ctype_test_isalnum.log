@@ -1,0 +1,93 @@
+==268410== Memcheck, a memory error detector
+==268410== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==268410== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==268410== Command: build/tests/ctype/test_isalnum
+==268410== 
+=== TESTANDO CASOS VÁLIDOS (Esperado: > 0) ===
+Char '0' (ASCII  48) -> Retorno: 1 [OK]
+Char '1' (ASCII  49) -> Retorno: 1 [OK]
+Char '2' (ASCII  50) -> Retorno: 1 [OK]
+Char '3' (ASCII  51) -> Retorno: 1 [OK]
+Char '4' (ASCII  52) -> Retorno: 1 [OK]
+Char '5' (ASCII  53) -> Retorno: 1 [OK]
+Char '6' (ASCII  54) -> Retorno: 1 [OK]
+Char '7' (ASCII  55) -> Retorno: 1 [OK]
+Char '8' (ASCII  56) -> Retorno: 1 [OK]
+Char '9' (ASCII  57) -> Retorno: 1 [OK]
+Char 'A' (ASCII  65) -> Retorno: 1 [OK]
+Char 'B' (ASCII  66) -> Retorno: 1 [OK]
+Char 'C' (ASCII  67) -> Retorno: 1 [OK]
+Char 'D' (ASCII  68) -> Retorno: 1 [OK]
+Char 'E' (ASCII  69) -> Retorno: 1 [OK]
+Char 'F' (ASCII  70) -> Retorno: 1 [OK]
+Char 'G' (ASCII  71) -> Retorno: 1 [OK]
+Char 'H' (ASCII  72) -> Retorno: 1 [OK]
+Char 'I' (ASCII  73) -> Retorno: 1 [OK]
+Char 'J' (ASCII  74) -> Retorno: 1 [OK]
+Char 'K' (ASCII  75) -> Retorno: 1 [OK]
+Char 'L' (ASCII  76) -> Retorno: 1 [OK]
+Char 'M' (ASCII  77) -> Retorno: 1 [OK]
+Char 'N' (ASCII  78) -> Retorno: 1 [OK]
+Char 'O' (ASCII  79) -> Retorno: 1 [OK]
+Char 'P' (ASCII  80) -> Retorno: 1 [OK]
+Char 'Q' (ASCII  81) -> Retorno: 1 [OK]
+Char 'R' (ASCII  82) -> Retorno: 1 [OK]
+Char 'S' (ASCII  83) -> Retorno: 1 [OK]
+Char 'T' (ASCII  84) -> Retorno: 1 [OK]
+Char 'U' (ASCII  85) -> Retorno: 1 [OK]
+Char 'V' (ASCII  86) -> Retorno: 1 [OK]
+Char 'W' (ASCII  87) -> Retorno: 1 [OK]
+Char 'X' (ASCII  88) -> Retorno: 1 [OK]
+Char 'Y' (ASCII  89) -> Retorno: 1 [OK]
+Char 'Z' (ASCII  90) -> Retorno: 1 [OK]
+Char 'a' (ASCII  97) -> Retorno: 1 [OK]
+Char 'b' (ASCII  98) -> Retorno: 1 [OK]
+Char 'c' (ASCII  99) -> Retorno: 1 [OK]
+Char 'd' (ASCII 100) -> Retorno: 1 [OK]
+Char 'e' (ASCII 101) -> Retorno: 1 [OK]
+Char 'f' (ASCII 102) -> Retorno: 1 [OK]
+Char 'g' (ASCII 103) -> Retorno: 1 [OK]
+Char 'h' (ASCII 104) -> Retorno: 1 [OK]
+Char 'i' (ASCII 105) -> Retorno: 1 [OK]
+Char 'j' (ASCII 106) -> Retorno: 1 [OK]
+Char 'k' (ASCII 107) -> Retorno: 1 [OK]
+Char 'l' (ASCII 108) -> Retorno: 1 [OK]
+Char 'm' (ASCII 109) -> Retorno: 1 [OK]
+Char 'n' (ASCII 110) -> Retorno: 1 [OK]
+Char 'o' (ASCII 111) -> Retorno: 1 [OK]
+Char 'p' (ASCII 112) -> Retorno: 1 [OK]
+Char 'q' (ASCII 113) -> Retorno: 1 [OK]
+Char 'r' (ASCII 114) -> Retorno: 1 [OK]
+Char 's' (ASCII 115) -> Retorno: 1 [OK]
+Char 't' (ASCII 116) -> Retorno: 1 [OK]
+Char 'u' (ASCII 117) -> Retorno: 1 [OK]
+Char 'v' (ASCII 118) -> Retorno: 1 [OK]
+Char 'w' (ASCII 119) -> Retorno: 1 [OK]
+Char 'x' (ASCII 120) -> Retorno: 1 [OK]
+Char 'y' (ASCII 121) -> Retorno: 1 [OK]
+Char 'z' (ASCII 122) -> Retorno: 1 [OK]
+
+=== TESTANDO CASOS INVÁLIDOS (Esperado: 0) ===
+Char 'g' (ASCII 103) -> Retorno: 1 [FAIL]
+Char 'G' (ASCII  71) -> Retorno: 1 [FAIL]
+Char '/' (ASCII  47) -> Retorno: 0 [OK]
+Char ':' (ASCII  58) -> Retorno: 0 [OK]
+Char ':' (ASCII  58) -> Retorno: 0 [OK]
+Char '`' (ASCII  96) -> Retorno: 0 [OK]
+Char '@' (ASCII  64) -> Retorno: 0 [OK]
+
+=== TESTANDO LIMITES E ESPECIAIS (Esperado: 0) ===
+Int    0  (Visual '?') -> Retorno: 0 [OK]
+Int   32  (Visual ' ') -> Retorno: 0 [OK]
+Int  127  (Visual '?') -> Retorno: 0 [OK]
+Int   -1  (Visual '?') -> Retorno: 0 [OK]
+Int  255  (Visual '?') -> Retorno: 0 [OK]
+==268410== 
+==268410== HEAP SUMMARY:
+==268410==     in use at exit: 0 bytes in 0 blocks
+==268410==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==268410== 
+==268410== All heap blocks were freed -- no leaks are possible
+==268410== 
+==268410== For lists of detected and suppressed errors, rerun with: -s
+==268410== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,0 +1,16 @@
+==268678== Memcheck, a memory error detector
+==268678== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==268678== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==268678== Command: build/tests/string/test_strndup
+==268678== 
+Original: Hello, World! | Endereço: 0x10a004
+Duplicate: Hello | Endereço: 0x4a77040
+==268678== 
+==268678== HEAP SUMMARY:
+==268678==     in use at exit: 0 bytes in 0 blocks
+==268678==   total heap usage: 2 allocs, 2 frees, 4,102 bytes allocated
+==268678== 
+==268678== All heap blocks were freed -- no leaks are possible
+==268678== 
+==268678== For lists of detected and suppressed errors, rerun with: -s
+==268678== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

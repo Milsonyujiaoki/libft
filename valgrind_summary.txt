@@ -1,49 +1,62 @@
-OK: ctype/test_isalnum
-OK: ctype/test_isalpha
-OK: ctype/test_isascii
-OK: ctype/test_isblank
-OK: ctype/test_iscntrl
-OK: ctype/test_isdigit
-OK: ctype/test_isgraph
-OK: ctype/test_islower
-OK: ctype/test_isprint
-OK: ctype/test_ispunct
-OK: ctype/test_isspace
-OK: ctype/test_isupper
-OK: ctype/test_isxdigit
-OK: ds/test_slist
-OK: memory/test_bzero
-OK: memory/test_memccpy
-OK: memory/test_memchr
-OK: memory/test_memcmp
-OK: memory/test_memcpy
-OK: memory/test_memmove
-OK: memory/test_memset
-OK: stdio/test_putcharfd
-OK: stdio/test_putendlfd
-OK: stdio/test_putnbrfd
-OK: stdio/test_putstrfd
-OK: stdlib/test_atoi
-OK: stdlib/test_calloc
-OK: stdlib/test_itoa
-OK: string/test_strcat
-OK: string/test_strchar
-OK: string/test_strcmp
-OK: string/test_strcpy
-OK: string/test_strdup
-OK: string/test_striteri
-OK: string/test_strjoin
-OK: string/test_strlcat
-OK: string/test_strlcpy
-OK: string/test_strlen
-OK: string/test_strmapi
-OK: string/test_strncat
-OK: string/test_strncmp
-OK: string/test_strncpy
-OK: string/test_strndup
-OK: string/test_strrchar
-OK: string/test_strsplit
-OK: string/test_strstr
-OK: string/test_strtok
-OK: string/test_strtrim
-OK: string/test_substr
+========================================
+ Executando Valgrind em todos os testes
+========================================
+
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+✓ PASSED
+
+========================================
+ RESUMO
+========================================
+Total de testes: 49
+Passou: 49
+Falhou: 0
+
+✓ TODOS OS TESTES PASSARAM SEM MEMORY LEAKS!

@@ -1,17 +1,17 @@
-==268488== Memcheck, a memory error detector
-==268488== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==268488== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==268488== Command: build/tests/memory/test_bzero
-==268488== 
+==271254== Memcheck, a memory error detector
+==271254== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==271254== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==271254== Command: build/tests/memory/test_bzero
+==271254== 
 Buffer before ft_bzero: abcdefghi 0x1ffefff75e 
 Buffer after ft_bzero: fghi 0x1ffefff763 
 Test passed
-==268488== 
-==268488== HEAP SUMMARY:
-==268488==     in use at exit: 0 bytes in 0 blocks
-==268488==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==268488== 
-==268488== All heap blocks were freed -- no leaks are possible
-==268488== 
-==268488== For lists of detected and suppressed errors, rerun with: -s
-==268488== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==271254== 
+==271254== HEAP SUMMARY:
+==271254==     in use at exit: 0 bytes in 0 blocks
+==271254==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==271254== 
+==271254== All heap blocks were freed -- no leaks are possible
+==271254== 
+==271254== For lists of detected and suppressed errors, rerun with: -s
+==271254== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

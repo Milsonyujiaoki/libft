@@ -1,8 +1,8 @@
-==268655== Memcheck, a memory error detector
-==268655== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==268655== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==268655== Command: build/tests/string/test_strmapi
-==268655== 
+==271431== Memcheck, a memory error detector
+==271431== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==271431== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==271431== Command: build/tests/string/test_strmapi
+==271431== 
 === INICIANDO TESTES: ft_strmapi ===
 
 [OK] Teste 1: Deslocamento básico ("abc" -> "ace")
@@ -13,12 +13,12 @@
 [OK] Teste 6: Mudança de case ("TeStInG" -> "tEsTiNg")
 
 === TESTES CONCLUÍDOS ===
-==268655== 
-==268655== HEAP SUMMARY:
-==268655==     in use at exit: 0 bytes in 0 blocks
-==268655==   total heap usage: 5 allocs, 5 frees, 4,115 bytes allocated
-==268655== 
-==268655== All heap blocks were freed -- no leaks are possible
-==268655== 
-==268655== For lists of detected and suppressed errors, rerun with: -s
-==268655== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==271431== 
+==271431== HEAP SUMMARY:
+==271431==     in use at exit: 0 bytes in 0 blocks
+==271431==   total heap usage: 5 allocs, 5 frees, 4,115 bytes allocated
+==271431== 
+==271431== All heap blocks were freed -- no leaks are possible
+==271431== 
+==271431== For lists of detected and suppressed errors, rerun with: -s
+==271431== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

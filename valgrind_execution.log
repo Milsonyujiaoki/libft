@@ -1,0 +1,62 @@
+========================================
+ Executando Valgrind em todos os testes
+========================================
+
+[1] Rodando ctype/test_isalnum ... ✓ PASSED
+[2] Rodando ctype/test_isalpha ... ✓ PASSED
+[3] Rodando ctype/test_isascii ... ✓ PASSED
+[4] Rodando ctype/test_isblank ... ✓ PASSED
+[5] Rodando ctype/test_iscntrl ... ✓ PASSED
+[6] Rodando ctype/test_isdigit ... ✓ PASSED
+[7] Rodando ctype/test_isgraph ... ✓ PASSED
+[8] Rodando ctype/test_islower ... ✓ PASSED
+[9] Rodando ctype/test_isprint ... ✓ PASSED
+[10] Rodando ctype/test_ispunct ... ✓ PASSED
+[11] Rodando ctype/test_isspace ... ✓ PASSED
+[12] Rodando ctype/test_isupper ... ✓ PASSED
+[13] Rodando ctype/test_isxdigit ... ✓ PASSED
+[14] Rodando ds/test_slist ... ✓ PASSED
+[15] Rodando memory/test_bzero ... ✓ PASSED
+[16] Rodando memory/test_memccpy ... ✓ PASSED
+[17] Rodando memory/test_memchr ... ✓ PASSED
+[18] Rodando memory/test_memcmp ... ✓ PASSED
+[19] Rodando memory/test_memcpy ... ✓ PASSED
+[20] Rodando memory/test_memmove ... ✓ PASSED
+[21] Rodando memory/test_memset ... ✓ PASSED
+[22] Rodando stdio/test_putcharfd ... ✓ PASSED
+[23] Rodando stdio/test_putendlfd ... ✓ PASSED
+[24] Rodando stdio/test_putnbrfd ... ✓ PASSED
+[25] Rodando stdio/test_putstrfd ... ✓ PASSED
+[26] Rodando stdlib/test_atoi ... ✓ PASSED
+[27] Rodando stdlib/test_calloc ... ✓ PASSED
+[28] Rodando stdlib/test_itoa ... ✓ PASSED
+[29] Rodando string/test_strcat ... ✓ PASSED
+[30] Rodando string/test_strchar ... ✓ PASSED
+[31] Rodando string/test_strcmp ... ✓ PASSED
+[32] Rodando string/test_strcpy ... ✓ PASSED
+[33] Rodando string/test_strdup ... ✓ PASSED
+[34] Rodando string/test_striteri ... ✓ PASSED
+[35] Rodando string/test_strjoin ... ✓ PASSED
+[36] Rodando string/test_strlcat ... ✓ PASSED
+[37] Rodando string/test_strlcpy ... ✓ PASSED
+[38] Rodando string/test_strlen ... ✓ PASSED
+[39] Rodando string/test_strmapi ... ✓ PASSED
+[40] Rodando string/test_strncat ... ✓ PASSED
+[41] Rodando string/test_strncmp ... ✓ PASSED
+[42] Rodando string/test_strncpy ... ✓ PASSED
+[43] Rodando string/test_strndup ... ✓ PASSED
+[44] Rodando string/test_strrchar ... ✓ PASSED
+[45] Rodando string/test_strsplit ... ✓ PASSED
+[46] Rodando string/test_strstr ... ✓ PASSED
+[47] Rodando string/test_strtok ... ✓ PASSED
+[48] Rodando string/test_strtrim ... ✓ PASSED
+[49] Rodando string/test_substr ... ✓ PASSED
+
+========================================
+ RESUMO
+========================================
+Total de testes: 49
+Passou: 49
+Falhou: 0
+
+✓ TODOS OS TESTES PASSARAM SEM MEMORY LEAKS!

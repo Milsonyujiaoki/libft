@@ -1,20 +1,20 @@
-==268527== Memcheck, a memory error detector
-==268527== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==268527== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==268527== Command: build/tests/stdio/test_putcharfd
-==268527== 
+==271306== Memcheck, a memory error detector
+==271306== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==271306== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==271306== Command: build/tests/stdio/test_putcharfd
+==271306== 
 A=== INICIANDO TESTES: ft_putchar_fd ===
 
 
 [OK] Teste 01: ft_putchar_fd('A', 1) - Verifique se 'A' foi impresso no console
 
 === TESTES CONCLUÍDOS: ft_putchar_fd ===
-==268527== 
-==268527== HEAP SUMMARY:
-==268527==     in use at exit: 0 bytes in 0 blocks
-==268527==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==268527== 
-==268527== All heap blocks were freed -- no leaks are possible
-==268527== 
-==268527== For lists of detected and suppressed errors, rerun with: -s
-==268527== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==271306== 
+==271306== HEAP SUMMARY:
+==271306==     in use at exit: 0 bytes in 0 blocks
+==271306==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==271306== 
+==271306== All heap blocks were freed -- no leaks are possible
+==271306== 
+==271306== For lists of detected and suppressed errors, rerun with: -s
+==271306== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

@@ -1,8 +1,8 @@
-==268531== Memcheck, a memory error detector
-==268531== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
-==268531== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
-==268531== Command: build/tests/stdio/test_putendlfd
-==268531== 
+==271313== Memcheck, a memory error detector
+==271313== Copyright (C) 2002-2022, and GNU GPL'd, by Julian Seward et al.
+==271313== Using Valgrind-3.22.0 and LibVEX; rerun with -h for copyright info
+==271313== Command: build/tests/stdio/test_putendlfd
+==271313== 
 Hello, World!
 
 === INICIANDO TESTES: ft_putendl_fd ===
@@ -10,12 +10,12 @@ Hello, World!
 [OK] Teste 01: ft_putendl_fd("Hello, World!", 1) - Verifique se 'Hello, World!' foi impresso seguido de uma nova linha no console
 
 === TESTES CONCLUÍDOS: ft_putendl_fd ===
-==268531== 
-==268531== HEAP SUMMARY:
-==268531==     in use at exit: 0 bytes in 0 blocks
-==268531==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
-==268531== 
-==268531== All heap blocks were freed -- no leaks are possible
-==268531== 
-==268531== For lists of detected and suppressed errors, rerun with: -s
-==268531== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)
+==271313== 
+==271313== HEAP SUMMARY:
+==271313==     in use at exit: 0 bytes in 0 blocks
+==271313==   total heap usage: 1 allocs, 1 frees, 4,096 bytes allocated
+==271313== 
+==271313== All heap blocks were freed -- no leaks are possible
+==271313== 
+==271313== For lists of detected and suppressed errors, rerun with: -s
+==271313== ERROR SUMMARY: 0 errors from 0 contexts (suppressed: 0 from 0)

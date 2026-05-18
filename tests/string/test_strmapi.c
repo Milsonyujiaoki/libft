@@ -1,3 +1,4 @@
+#include "libft.h"
 #include <libft.h>
 #include <assert.h> // Útil para automação, ou use if/else se a norma proibir
 

@@ -1,7 +1,5 @@
 
-#include "ds/vector.h"
-#include "memory/alloc.h"
-#include "memory/memory.h"
+#include "libft.h"
 
 /*
 ** =========================================================

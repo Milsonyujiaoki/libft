@@ -1,3 +1,4 @@
+#include "libft.h"
 #include <libft.h>
 
 void to_upper(unsigned int i, char *c) {

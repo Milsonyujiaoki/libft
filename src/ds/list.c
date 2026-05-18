@@ -1,6 +1,5 @@
 
-#include "ds/list.h"
-#include "memory/alloc.h"
+#include "libft.h"
 
 /*
 ** =========================================================

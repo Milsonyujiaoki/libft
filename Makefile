@@ -2,15 +2,15 @@
 # Compiler / Archiver
 # =========================================================
 
-CC       = gcc
-AR       = ar
-ARFLAGS  = rcs
+CC      = gcc
+AR      = ar
+ARFLAGS = rcs
 
 # =========================================================
 # Project
 # =========================================================
 
-NAME     = libft
+NAME = libft
 
 # =========================================================
 # Directories
@@ -19,79 +19,63 @@ NAME     = libft
 SRC_DIR      = src
 TEST_SRC_DIR = tests
 INC_DIR      = include
-
 BUILD_DIR    = build
 
-STATIC_DIR   = $(BUILD_DIR)/static
-SHARED_DIR   = $(BUILD_DIR)/shared
-
-OBJ_DIR      = $(BUILD_DIR)/obj
-OBJ_STATIC   = $(OBJ_DIR)/static
-OBJ_SHARED   = $(OBJ_DIR)/shared
-
-TEST_DIR     = $(BUILD_DIR)/tests
+STATIC_DIR = $(BUILD_DIR)/static
+SHARED_DIR = $(BUILD_DIR)/shared
+OBJ_DIR    = $(BUILD_DIR)/obj
+OBJ_STATIC = $(OBJ_DIR)/static
+OBJ_SHARED = $(OBJ_DIR)/shared
+TEST_DIR   = $(BUILD_DIR)/tests
 
 # =========================================================
 # Library output
 # =========================================================
 
-STATIC_LIB   = $(STATIC_DIR)/$(NAME).a
-SHARED_MAJOR  = 1
-SHARED_VERSION = $(SHARED_MAJOR).0.1
-SHARED_SONAME = $(NAME).so.$(SHARED_MAJOR)
-SHARED_LIB    = $(SHARED_DIR)/$(NAME).so.$(SHARED_VERSION)
+STATIC_LIB       = $(STATIC_DIR)/$(NAME).a
+
+SHARED_MAJOR     = 1
+SHARED_VERSION   = $(SHARED_MAJOR).0.1
+SHARED_SONAME    = $(NAME).so.$(SHARED_MAJOR)
+SHARED_LIB       = $(SHARED_DIR)/$(NAME).so.$(SHARED_VERSION)
 SHARED_LIB_MAJOR = $(SHARED_DIR)/$(SHARED_SONAME)
-SHARED_LINK   = $(SHARED_DIR)/$(NAME).so
-SHARED_MAP    = make/libft.map
+SHARED_LINK      = $(SHARED_DIR)/$(NAME).so
 
 # =========================================================
-# Compiler flags
+# Flags
 # =========================================================
 
-CFLAGS       = -Wall -Wextra -Werror # Enable all warnings and treat them as errors
-CFLAGS      += -Wpedantic -std=c11 # Enforce C11 standard and pedantic warnings
-CFLAGS      += -O2 # Optimize for speed (can be adjusted for debugging)
-CFLAGS      += -I$(INC_DIR)
-CFLAGS      += -MMD -MP # Dependency Generation
+CFLAGS  = -Wall -Wextra -Werror -Wpedantic -std=c11 -O2
+CFLAGS += -I$(INC_DIR) -MMD -MP
 
-PIC_FLAGS    = -fPIC # Position Independent Code for shared library
+PIC_FLAGS = -fPIC
 
-LDFLAGS      = -L$(STATIC_DIR) -lft # Link against static library for tests
-SHARED_LDFLAGS = -shared -Wl,-soname,$(SHARED_SONAME) -Wl,--version-script=$(abspath $(SHARED_MAP))
+LDFLAGS = -L$(STATIC_DIR) -lft
 
-TEST_INC     = -I$(INC_DIR)/core
+SHARED_LDFLAGS = -shared -Wl,-soname,$(SHARED_SONAME)
 
 # =========================================================
 # Debug
 # =========================================================
 
-DEBUG_FLAGS  = -g3 # Include debug symbols with maximum level of detail
-DEBUG_FLAGS += -DLIBFT_DEBUG # Define a macro for conditional debug code in the library
-DEBUG_FLAGS += -fsanitize=address,undefined # Enable AddressSanitizer and UndefinedBehaviorSanitizer for runtime checks
+DEBUG_FLAGS = -g3 -DLIBFT_DEBUG -fsanitize=address,undefined
 
-debug: CFLAGS += $(DEBUG_FLAGS)
+debug: CFLAGS  += $(DEBUG_FLAGS)
 debug: LDFLAGS += -fsanitize=address,undefined
 debug: all
 
 # =========================================================
-# Sources
+# Sources and objects
 # =========================================================
 
-SRC          = $(wildcard $(SRC_DIR)/*/*.c)
+SRC         = $(wildcard $(SRC_DIR)/*/*.c)
+OBJ_STATICS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_STATIC)/%.o, $(SRC))
+OBJ_SHAREDS = $(patsubst $(SRC_DIR)/%.c, $(OBJ_SHARED)/%.o, $(SRC))
+DEP_STATICS = $(OBJ_STATICS:.o=.d)
+DEP_SHAREDS = $(OBJ_SHAREDS:.o=.d)
 
-OBJ_STATICS  = $(patsubst $(SRC_DIR)/%.c,$(OBJ_STATIC)/%.o,$(SRC))
-OBJ_SHAREDS  = $(patsubst $(SRC_DIR)/%.c,$(OBJ_SHARED)/%.o,$(SRC))
-
-DEP_STATICS  = $(OBJ_STATICS:.o=.d)
-DEP_SHAREDS  = $(OBJ_SHAREDS:.o=.d)
-
-# =========================================================
-# Tests
-# =========================================================
-
-TESTS        = $(wildcard $(TEST_SRC_DIR)/*/*.c)
-
-TEST_BINS    = $(patsubst $(TEST_SRC_DIR)/%.c,$(TEST_DIR)/%,$(TESTS))
+TESTS     = $(wildcard $(TEST_SRC_DIR)/*/*.c)
+TEST_BINS = $(patsubst $(TEST_SRC_DIR)/%.c, $(TEST_DIR)/%, $(TESTS))
 
 # =========================================================
 # Main targets
@@ -106,33 +90,21 @@ shared: $(SHARED_LIB)
 tests: $(TEST_BINS)
 
 # =========================================================
-# Static objects
+# Build rules
 # =========================================================
 
 $(OBJ_STATIC)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) -c $< -o $@
 
-# =========================================================
-# Shared objects (PIC)
-# =========================================================
-
 $(OBJ_SHARED)/%.o: $(SRC_DIR)/%.c
 	@mkdir -p $(dir $@)
 	$(CC) $(CFLAGS) $(PIC_FLAGS) -c $< -o $@
-
-# =========================================================
-# Static library
-# =========================================================
 
 $(STATIC_LIB): $(OBJ_STATICS)
 	@mkdir -p $(STATIC_DIR)
 	$(AR) $(ARFLAGS) $@ $^
 	@echo "Built static library: $@"
-
-# =========================================================
-# Shared library
-# =========================================================
 
 $(SHARED_LIB): $(OBJ_SHAREDS)
 	@mkdir -p $(SHARED_DIR)
@@ -141,15 +113,9 @@ $(SHARED_LIB): $(OBJ_SHAREDS)
 	ln -sfn $(notdir $(SHARED_LIB_MAJOR)) $(SHARED_LINK)
 	@echo "Built shared library: $@"
 
-# =========================================================
-# Test binaries
-# =========================================================
-
 $(TEST_DIR)/%: $(TEST_SRC_DIR)/%.c $(STATIC_LIB)
 	@mkdir -p $(dir $@)
-	$(CC) $(CFLAGS) $(TEST_INC) \
-		-include libft.h \
-		$< $(LDFLAGS) -o $@
+	$(CC) $(CFLAGS) $< $(LDFLAGS) -o $@
 
 # =========================================================
 # Run tests
@@ -160,7 +126,6 @@ test: all
 	@echo "========================================"
 	@echo " Running test suite"
 	@echo "========================================"
-
 	@PASS=0; FAIL=0; \
 	for bin in $(TEST_BINS); do \
 		if [ -f $$bin ]; then \
@@ -180,10 +145,6 @@ test: all
 	echo "========================================"; \
 	[ $$FAIL -eq 0 ]
 
-# =========================================================
-# DS tests only
-# =========================================================
-
 test_ds: all
 	@for bin in $(TEST_DIR)/ds/*; do \
 		if [ -f $$bin ]; then \
@@ -199,13 +160,10 @@ test_ds: all
 PREFIX ?= /usr/local
 
 install: static shared
-	@mkdir -p $(PREFIX)/include
-	@mkdir -p $(PREFIX)/lib
-
+	@mkdir -p $(PREFIX)/include $(PREFIX)/lib
 	cp $(INC_DIR)/libft.h $(PREFIX)/include/
 	cp $(STATIC_LIB) $(PREFIX)/lib/
 	cp -a $(SHARED_DIR)/$(NAME).so* $(PREFIX)/lib/
-
 	@echo "Installed libft to $(PREFIX)"
 
 uninstall:
@@ -214,7 +172,6 @@ uninstall:
 	rm -f $(PREFIX)/lib/$(NAME).so
 	rm -f $(PREFIX)/lib/$(NAME).so.$(SHARED_MAJOR)
 	rm -f $(PREFIX)/lib/$(NAME).so.$(SHARED_VERSION)
-
 	@echo "Removed libft from $(PREFIX)"
 
 # =========================================================
@@ -239,16 +196,4 @@ re: fclean all
 # Phony
 # =========================================================
 
-.PHONY: \
-	all \
-	static \
-	shared \
-	tests \
-	test \
-	test_ds \
-	debug \
-	install \
-	uninstall \
-	clean \
-	fclean \
-	re
+.PHONY: all static shared tests test test_ds debug install uninstall clean fclean re

@@ -1,3 +1,4 @@
+#include "libft.h"
 #include <stdio.h>
 #include <string.h>
 // Prototipagem da sua função para o compilador

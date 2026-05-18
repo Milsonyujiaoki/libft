@@ -15,13 +15,20 @@ Project goals:
 
 Detailed overview of the library:
 
-- `core`: fixed-width types, compiler helpers and configuration macros.
+- `core`: fixed-width types and compiler aliases — all merged into `include/libft.h`.
 - `ctype`: character classification and case conversion (`ft_is*`, `ft_to*`).
 - `string`: string operations and helpers (copy, compare, search, split, trim, tokenization).
 - `memory`: raw memory operations and allocators (`ft_mem*`, `ft_malloc`, `ft_free`).
 - `stdlib`: conversion utilities (`ft_atoi`, `ft_itoa`, `ft_calloc`, `ft_strdup`, etc.).
 - `io/stdio`: output helpers (`ft_putchar_fd`, `ft_putstr_fd`, `ft_putendl_fd`, `ft_putnbr_fd`).
-- `ds`: custom containers (`t_slist` / `ft_lst*`, `t_dlist`, `t_vector`, `t_stack`, `t_queue`).
+- `ds`: custom containers (`t_list` / `ft_lst*`, `t_slist`, `t_dlist`, `t_vector`, `t_stack`, `t_queue`).
+
+Public API:
+
+- **Single header**: `include/libft.h` — all type definitions, structs, and function prototypes in one
+  organized file (§1 Core types · §2 Ctype · §3 Memory · §4 Alloc · §5 String · §6 Stdlib · §7 I/O · §8 Data Structures).
+- Sub-headers under `include/core/`, `include/memory/`, `include/string/`, `include/io/`, `include/ds/`
+  are kept as compatibility shims — they simply `#include "libft.h"` and continue to work.
 
 Linked list requirement implemented:
 
@@ -83,6 +90,7 @@ make uninstall
 Using the library in your code:
 
 ```c
+/* Only one include needed — everything is in libft.h */
 #include "libft.h"
 
 int main(void)
@@ -121,10 +129,10 @@ Classic references for libc and low-level C:
 
 How AI was used in this project:
 
-- AI assisted in simplifying data structure headers (`dlist`, `vector`, `stack`, `queue`, `slist`): replaced custom type aliases with standard C inline function pointers to match the project's simple style.
+
 - AI assisted in fixing compilation errors across DS sources: missing includes, undefined constants, and missing include guards.
 - AI assisted in restructuring and updating this README according to 42 requirements.
-- All changes were compiled and tested locally; 49 test suites pass with zero failures.
+
 
 ## License
 

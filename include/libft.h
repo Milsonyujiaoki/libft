@@ -6,7 +6,7 @@
 /*   By: milsonyujiaoki <milsonyujiaoki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 04:22:16 by milsonyujia       #+#    #+#             */
-/*   Updated: 2026/05/25 04:47:04 by milsonyujia      ###   ########.fr       */
+/*   Updated: 2026/05/25 05:24:52 by milsonyujia      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,9 @@
 # include <stdbool.h>
 # include <stddef.h>
 # include <stdint.h>
+# include <stdlib.h>
+# include <stdio.h>
+# include <unistd.h>
 
 /* ════════════════════════════════════════
 ** §1  CORE — primitive type aliases
@@ -151,10 +154,88 @@ void					ft_putstr_fd(const char *str, int fd);
 void					ft_putendl_fd(const char *str, int fd);
 void					ft_putnbr_fd(int n, int fd);
 
-int						ft_printf(const char *fmt, ...);
 int						ft_sprintf(char *buf, const char *fmt, ...);
 int						ft_snprintf(char *buf, t_usize size, const char *fmt,
 							...);
+
+/* ═════════════════════════════════
+** §   FT_printf
+** ═════════════════════════════════*/
+
+typedef struct s_format
+{
+	char				specifier;
+	int					width;
+	int					precision;
+	int					zero;
+	int					left_align;
+	int					plus;
+	int					space;
+	int					hash;
+}						t_format;
+
+typedef struct s_dispatch
+{
+	char				specifier;
+	int					(*fn)(t_format *, va_list);
+}						t_dispatch;
+
+typedef enum e_specifier
+{
+	SP_CHAR = 'c',
+	SP_STR = 's',
+	SP_PTR = 'p',
+	SP_DEC = 'd',
+	SP_INT = 'i',
+	SP_UINT = 'u',
+	SP_HEX_LOW = 'x',
+	SP_HEX_UP = 'X',
+	SP_PERCENT = '%'
+}						t_specifier;
+
+/* core */
+int						ft_printf(const char *fmt, ...);
+
+/* conversions — internal */
+int						print_char(t_format *fmt, va_list args);
+int						print_str(t_format *fmt, va_list args);
+int						print_int(t_format *fmt, va_list args);
+int						print_uint(t_format *fmt, va_list args);
+int						print_hex(t_format *fmt, va_list args);
+int						print_ptr(t_format *fmt, va_list args);
+int						print_percent(t_format *fmt, va_list args);
+
+/* utils */
+
+int						put_char_len(char c);
+int						put_str_len(const char *str, int precision);
+int						putnbr_base_len(uintptr_t n, const char *base);
+
+/* FUNCTIONS */
+
+int						dispatch(t_format *fmt, va_list args);
+
+int						handle_format(const char *fmt, int *i, va_list args);
+
+void					init_format(t_format *format);
+void					par_prec(const char *fmt, int *i, t_format *format,
+							va_list args);
+void					par_specifier(const char *fmt, int *i,
+							t_format *format);
+void					par_flags(const char *fmt, int *i, t_format *format);
+void					par_width(const char *fmt, int *i, t_format *format,
+							va_list args);
+
+/* ═════════════════════════════════
+** §	GET_NEXT_LINE
+** ═════════════════════════════════*/
+
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 42
+# endif
+
+char					*get_next_line(int fd);
+char					*get_next_line_linkedlist(int fd);
 
 /* ═════════════════════════════════
 ** §8  DATA STRUCTURES

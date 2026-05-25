@@ -34,8 +34,8 @@ TEST_DIR   = $(BUILD_DIR)/tests
 
 STATIC_LIB       = $(STATIC_DIR)/$(NAME).a
 
-SHARED_MAJOR     = 1
-SHARED_VERSION   = $(SHARED_MAJOR).0.1
+SHARED_MAJOR     = 3
+SHARED_VERSION   = $(SHARED_MAJOR).1.1
 SHARED_SONAME    = $(NAME).so.$(SHARED_MAJOR)
 SHARED_LIB       = $(SHARED_DIR)/$(NAME).so.$(SHARED_VERSION)
 SHARED_LIB_MAJOR = $(SHARED_DIR)/$(SHARED_SONAME)
@@ -81,7 +81,7 @@ TEST_BINS = $(patsubst $(TEST_SRC_DIR)/%.c, $(TEST_DIR)/%, $(TESTS))
 # Main targets
 # =========================================================
 
-all: static tests
+all: static shared tests
 
 static: $(STATIC_LIB)
 

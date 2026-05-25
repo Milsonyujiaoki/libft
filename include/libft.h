@@ -6,7 +6,7 @@
 /*   By: milsonyujiaoki <milsonyujiaoki@student.    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2026/05/25 04:22:16 by milsonyujia       #+#    #+#             */
-/*   Updated: 2026/05/25 04:22:17 by milsonyujia      ###   ########.fr       */
+/*   Updated: 2026/05/25 04:47:04 by milsonyujia      ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,9 +18,9 @@
 # include <stddef.h>
 # include <stdint.h>
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════
 ** §1  CORE — primitive type aliases
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ════════════════════════════════════════*/
 
 typedef uint8_t			t_u8;
 typedef uint16_t		t_u16;
@@ -44,9 +44,9 @@ typedef intptr_t		t_iptr;
 typedef bool			t_bool;
 typedef unsigned char	t_byte;
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════
 ** §2  CTYPE — character classification and case conversion
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ════════════════════════════════════════ */
 
 int						ft_isdigit(int c);
 int						ft_isxdigit(int c);
@@ -65,9 +65,9 @@ int						ft_ispunct(int c);
 int						ft_toupper(int c);
 int						ft_tolower(int c);
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════════════
 ** §3  MEMORY — raw memory operations
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ═══════════════════════════════════════════════ */
 
 void					*ft_memset(void *dest, int ch, size_t count);
 void					*ft_memcpy(void *dest, const void *src, size_t count);
@@ -79,14 +79,14 @@ int						ft_memcmp(const void *lhs, const void *rhs,
 void					*ft_memchr(const void *ptr, int value, size_t count);
 void					*ft_bzero(void *ptr, size_t count);
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ════════════════════════════════════════════════
 ** §4  ALLOC — general-purpose allocators
 **
 ** Ownership contract:
 **   ft_malloc / ft_calloc  — caller owns the returned pointer
 **   ft_realloc             — may invalidate the original pointer
 **   ft_free                — releases ownership; pointer is invalid after
-** ═══════════════════════════════════════════════════════════════════════════ */
+════════════════════════════════════════════════════ */
 
 void					*ft_malloc(t_usize size);
 void					*ft_calloc(t_usize count, t_usize size);
@@ -94,9 +94,9 @@ void					*ft_realloc(void *ptr, t_usize new_size);
 void					ft_free(void *ptr);
 void					*ft_realloc_safe(void **ptr, t_usize new_size);
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/*═══════════════════════════════════════════════════
 ** §5  STRING — examination and manipulation
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ══════════════════════════════════════════════════ */
 
 size_t					ft_strlen(const char *str);
 int						ft_strcmp(const char *lhs, const char *rhs);
@@ -128,9 +128,9 @@ char					*ft_strmapi(const char *str, char (*f)(unsigned int,
 								char));
 void					ft_striteri(char *str, void (*f)(unsigned int, char *));
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════════
 ** §6  STDLIB — numeric conversions
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ══════════════════════════════════════*/
 
 int						ft_atoi(const char *str);
 long					ft_atol(const char *str);
@@ -138,9 +138,9 @@ long long				ft_atoll(const char *str);
 double					ft_atof(const char *str);
 char					*ft_itoa(int n);
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ═══════════════════════════════════
 ** §7  I/O — character, string, and formatted output
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ═══════════════════════════════════*/
 
 int						ft_putchar(int c);
 int						ft_getchar(void);
@@ -156,9 +156,9 @@ int						ft_sprintf(char *buf, const char *fmt, ...);
 int						ft_snprintf(char *buf, t_usize size, const char *fmt,
 							...);
 
-/* ═══════════════════════════════════════════════════════════════════════════
+/* ═════════════════════════════════
 ** §8  DATA STRUCTURES
-** ═══════════════════════════════════════════════════════════════════════════ */
+** ═════════════════════════════════*/
 
 /* ── §8.1  t_list  ─────────────────────────────────────────────────────────
 ** Singly-linked list — required by the 42 norm.
